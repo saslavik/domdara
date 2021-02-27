@@ -392,7 +392,6 @@ export default {
     padding-left: 12px;
     text-align: left;
     display: flex;
-    justify-content: start;
     margin: auto 0;
   }
 }
