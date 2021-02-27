@@ -83,6 +83,12 @@ section, .section {
     max-width: $smPhoneWidth;
   }
 }
+
+.item_filler {
+  flex: 0 1 204px;
+  height: 0;
+}
+
 .vue-slider {
   max-width: 239px;
   margin: 0 auto;
