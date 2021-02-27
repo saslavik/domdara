@@ -2,24 +2,41 @@
   <div class="filter">
     <input type="text" class="find filter_item" placeholder="Поиск">
     <div class="sort">
-      <div class="sort_title main_options arrow filter_item">Сортировка</div>
-      <div class="sort_body"></div>
-    </div>
+      <div class="main_options arrow filter_item"
+      :class="{arrow_active: arrow.sort}"
+      @click='arrow.sort = !arrow.sort'>Сортировка</div>
+      <div class="filter_body"
+      :class="{filter_body_active: arrow.sort}"
+      >asdasd <br><br><br><br>asdsdfg</div>
+    </div >
     <div class="payments">
-      <div class="payments_title main_options arrow filter_item">Варианты оплаты</div>
-      <div class="payments_body"></div>
+      <div class="main_options arrow filter_item"
+      :class="{arrow_active: arrow.payments}"
+      @click='arrow.payments = !arrow.payments'
+      >Варианты оплаты</div>
+      <div class="filter_body"
+      :class="{filter_body_active: arrow.payments}"></div>
     </div>
     <div class="countries options">
-      <div class="options_title arrow">Страна</div>
-      <div class="countries_body"></div>
+      <div class="options_title arrow"
+      :class="{arrow_active: arrow.countries}"
+      @click='arrow.countries = !arrow.countries'>Страна</div>
+      <div class="filter_body"
+      :class="{filter_body_active: arrow.countries}"></div>
     </div>
     <div class="cities options">
-      <div class="options_title arrow">Город</div>
-      <div class="cities_body"></div>
+      <div class="options_title arrow"
+      :class="{arrow_active: arrow.cities}"
+      @click='arrow.cities = !arrow.cities'>Город</div>
+      <div class="filter_body"
+      :class="{filter_body_active: arrow.cities}"></div>
     </div>
     <div class="area options">
-      <div class="options_title arrow">Район</div>
-      <div class="area_body"></div>
+      <div class="options_title arrow"
+      :class="{arrow_active: arrow.area}"
+      @click='arrow.area = !arrow.area'>Район</div>
+      <div class="filter_body"
+      :class="{filter_body_active: arrow.area}"></div>
     </div>
     <div class="distance">
       Радиус поиска
@@ -44,8 +61,16 @@
       @click="item.value = !item.value">{{ item.title }}</div>
     </div>
     <div class="catalog">
-      <div class="catalog_title main_options arrow filter_item">Каталог</div>
-      <div class="catalog_body"></div>
+      <div class="main_options arrow filter_item"
+      :class="{arrow_active: arrow.catalog}"
+      @click='arrow.catalog = !arrow.catalog'>Каталог</div>
+      <div class="filter_body"
+      :class="{filter_body_active: arrow.catalog}">
+        <div class="catalog_item" v-for="item in catalog" :key="item.title">
+          <img :src="require(`../assets/svg/catalog/${item.img}.svg`)" alt="">
+          <div class="catalog_text">{{ item.title }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -88,12 +113,141 @@ export default {
           value: false,
         },
       },
+      arrow: {
+        sort: false,
+        payments: false,
+        countries: false,
+        cities: false,
+        area: false,
+        catalog: false,
+      },
+      catalog: {
+        woman: {
+          title: 'Женская одежда',
+          img: 't-shirt-2-line',
+        },
+        man: {
+          title: 'Мужская одежда',
+          img: 'shirt-line',
+        },
+        gsm: {
+          title: 'Мобильные телефоны и аксессуары',
+          img: 'smartphone-line',
+        },
+        baby: {
+          title: 'Мать и ребёнок',
+          img: 'parent-line',
+        },
+        auto: {
+          title: 'Автомобили и мотоциклы',
+          img: 'car-line',
+        },
+        groccery: {
+          title: 'Украшния и часы',
+          img: 'time-line',
+        },
+        pc: {
+          title: 'Компьютерная и офисная техника',
+          img: 'computer-line',
+        },
+        baggage: {
+          title: 'Багаж и сумки',
+          img: 'briefcase-3-line',
+        },
+        home: {
+          title: 'Дом и сад',
+          img: 'plant-line',
+        },
+        electronics: {
+          title: 'Электроника',
+          img: 'flashlight-line',
+        },
+        beauty: {
+          title: 'Красота и здоровье',
+          img: 'empathize-line',
+        },
+        sport: {
+          title: 'Спорт и развлечения',
+          img: 'basketball-line',
+        },
+        shoes: {
+          title: 'Обувь',
+          img: 'footprint-line',
+        },
+        light: {
+          title: 'Лампы и освещение',
+          img: 'keynote-line',
+        },
+        toys: {
+          title: 'Игрушки и хобби',
+          img: 'bear-smile-line',
+        },
+        weddings: {
+          title: 'Свадьбы и торжества',
+          img: 'open-arm-line',
+        },
+        furniture: {
+          title: 'Мебель',
+          img: 'archive-drawer-line',
+        },
+        components: {
+          title: 'Электронные компоненты и принадлежности',
+          img: 'battery-2-charge-line',
+        },
+        food: {
+          title: 'Продукты',
+          img: 'cake-3-line',
+        },
+        stationery: {
+          title: 'Канцтовары для офиса и дома',
+          img: 'pencil-ruler-2-line',
+        },
+        appliances: {
+          title: 'Бытовая техника',
+          img: 'fridge-line',
+        },
+        improvement: {
+          title: 'Обустройство дома',
+          img: 'home-4-line',
+        },
+        uniform: {
+          title: 'Тематическая одежда и униформа',
+          img: 't-shirt-line',
+        },
+        wigs: {
+          title: 'Шиньоны и парики',
+          img: 'scissors-line',
+        },
+        tools: {
+          title: 'Инструменты',
+          img: 'hammer-line',
+        },
+        security: {
+          title: 'Безопасность и защита',
+          img: 'shield-check-line',
+        },
+        accessories: {
+          title: 'Аксессуары для одежды',
+          img: 'hand-coin-line',
+        },
+        digital: {
+          title: 'Цифровые товары',
+          img: 'bank-card-line',
+        },
+        online: {
+          title: 'Online услуги',
+          img: 'global-line',
+        },
+      },
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.filter {
+  transition: all 0.3s ease 0s;
+}
 .filter_item {
   width: 283px;
   height: 40px;
@@ -121,15 +275,17 @@ export default {
     mask-size: cover;
     width: 16px;
     height: 16px;
-
   }
+
 }
 .main_options {
   background-color: #E6E6E6;
   line-height: 40px;
   margin-bottom: 14px;
+  transition: all 0.3s ease 0s;
   cursor: pointer;
   &::after {
+    transition: all 0.3s ease 0s;
     background-color: #fff;
     top: 12px;
     right: 18px;
@@ -137,15 +293,26 @@ export default {
 }
 .options {
   padding: 15px;
+  transition: all 0.3s ease 0s;
   &_title {
     border-bottom: 1px solid #BFBFBF;
     padding: 12px 0;
     cursor: pointer;
     &::after {
+      transition: all 0.3s ease 0s;
       background-color: #CFCFCF;
       top: 16px;
       right: 4px;
     }
+  }
+}
+.arrow_active {
+  color: #7141F0;
+  transition: all 0.3s ease 0s;
+  &::after {
+    transform: rotate(90deg);
+    background-color: #7141F0;
+    transition: all 0.3s ease 0s;
   }
 }
 .distance {
@@ -199,6 +366,34 @@ export default {
         background-position: center;
       }
     }
+  }
+}
+.filter_body {
+  padding: 0 15px;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
+}
+.filter_body_active {
+  max-height: 500px;
+    transition: max-height 0.3s ease-in;
+}
+.catalog_item {
+  display: flex;
+  text-align: center;
+  min-height: 28px;
+  width: 283px;
+  img {
+    width: 18px;
+    height: 18px;
+    margin: auto 0;
+  }
+  .catalog_text {
+    padding-left: 12px;
+    text-align: left;
+    display: flex;
+    justify-content: start;
+    margin: auto 0;
   }
 }
 </style>

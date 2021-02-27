@@ -51,6 +51,7 @@ export default {
 <style lang="scss" scoped>
 .home_nav {
   margin-left: 308px;
+  margin-bottom: 20px;
 }
 .home_nav-list {
   display: flex;
