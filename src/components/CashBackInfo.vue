@@ -61,14 +61,14 @@ export default {
     font-size: 48px;
     font-weight: 700;
     color: #fff;
-    width: 990px;
+    max-width: 990px;
     margin-bottom: 45px;
   }
   &_descr {
     font-size: 20px;
     font-weight: 400;
     color: #fff;
-    width: 850px;
+    max-width: 850px;
     p {
       margin-bottom: 30px;
     }

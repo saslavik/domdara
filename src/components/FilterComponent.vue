@@ -1,7 +1,8 @@
 <template>
   <div class="filter">
-    <input type="text" class="find filter_item" placeholder="Поиск">
-      <div class="sort">
+    <div class="find"><input type="text" class="find_input filter_item" placeholder="Поиск"></div>
+    <div class="filter_content">
+      <div class="sort filter_item">
         <div class="main_options arrow filter_item"
         :class="{arrow_active: arrow.sort}"
         @click='arrow.sort = !arrow.sort'>Сортировка</div>
@@ -12,72 +13,73 @@
           ></div>
         </transition>
       </div >
-    <div class="payments">
-      <div class="main_options arrow filter_item"
-      :class="{arrow_active: arrow.payments}"
-      @click='arrow.payments = !arrow.payments'
-      >Варианты оплаты</div>
-      <transition name="fade">
-        <div class="filter_body"
-        :class="{filter_body_active: arrow.payments}"></div>
-      </transition>
-    </div>
-    <div class="countries options">
-      <div class="options_title arrow"
-      :class="{arrow_active: arrow.countries}"
-      @click='arrow.countries = !arrow.countries'>Страна</div>
-      <transition name="fade">
-        <div class="filter_body"
-        v-show="arrow.countries"
-        :class="{filter_body_active: arrow.countries}">
-        Молдова <br>
-        Украшния <br>
-        Россия <br>
-        Беларусь
-        </div>
-      </transition>
-    </div>
-    <div class="cities options">
-      <div class="options_title arrow"
-      :class="{arrow_active: arrow.cities}"
-      @click='arrow.cities = !arrow.cities'>Город</div>
-      <transition name="fade">
-        <div class="filter_body"
-        :class="{filter_body_active: arrow.cities}"></div>
-      </transition>
-    </div>
-    <div class="area options">
-      <div class="options_title arrow"
-      :class="{arrow_active: arrow.area}"
-      @click='arrow.area = !arrow.area'>Район</div>
-      <transition name="fade">
-        <div class="filter_body"
-        :class="{filter_body_active: arrow.area}"></div>
-      </transition>
-    </div>
-    <div class="distance">
-      Радиус поиска
-      <div class="distance_inputs">
-        <input v-model="distance[0]">
-        <span>—</span>
-        <input v-model="distance[1]">
+      <div class="payments filter_item">
+        <div class="main_options arrow filter_item"
+        :class="{arrow_active: arrow.payments}"
+        @click='arrow.payments = !arrow.payments'
+        >Варианты оплаты</div>
+        <transition name="fade">
+          <div class="filter_body"
+          :class="{filter_body_active: arrow.payments}"></div>
+        </transition>
       </div>
-      <vue-slider
-      v-model="distance"
-      :min='1000'
-      :max='25000'
-      :min-range='1000'
-      :process-dragable="true"
-      tooltip="'none'">
-      </vue-slider>
+      <div class="countries options filter_item">
+        <div class="options_title arrow"
+        :class="{arrow_active: arrow.countries}"
+        @click='arrow.countries = !arrow.countries'>Страна</div>
+        <transition name="fade">
+          <div class="filter_body"
+          v-show="arrow.countries"
+          :class="{filter_body_active: arrow.countries}">
+          item1 <br>
+          item2 <br>
+          item3 <br>
+          item4
+          </div>
+        </transition>
+      </div>
+      <div class="cities options filter_item">
+        <div class="options_title arrow"
+        :class="{arrow_active: arrow.cities}"
+        @click='arrow.cities = !arrow.cities'>Город</div>
+        <transition name="fade">
+          <div class="filter_body"
+          :class="{filter_body_active: arrow.cities}"></div>
+        </transition>
+      </div>
+      <div class="area options filter_item">
+        <div class="options_title arrow"
+        :class="{arrow_active: arrow.area}"
+        @click='arrow.area = !arrow.area'>Район</div>
+        <transition name="fade">
+          <div class="filter_body"
+          :class="{filter_body_active: arrow.area}"></div>
+        </transition>
+      </div>
+      <div class="distance filter_item">
+        Радиус поиска
+        <div class="distance_inputs">
+          <input v-model="distance[0]">
+          <span>—</span>
+          <input v-model="distance[1]">
+        </div>
+        <vue-slider
+        v-model="distance"
+        :min='1000'
+        :max='25000'
+        :min-range='1000'
+        :process-dragable="true"
+        tooltip="'none'">
+        </vue-slider>
+      </div>
+      <div class="advanced filter_item">
+        <div v-for="item in advanced" :key="item.title"
+        class="checkbox"
+        :class="{advanced_active: item.value}"
+        @click="item.value = !item.value">{{ item.title }}</div>
+      </div>
     </div>
-    <div class="advanced">
-      <div v-for="item in advanced" :key="item.title"
-      class="checkbox"
-      :class="{advanced_active: item.value}"
-      @click="item.value = !item.value">{{ item.title }}</div>
-    </div>
-    <div class="catalog">
+    <div class="catalog filter_item">
       <div class="main_options arrow filter_item"
       :class="{arrow_active: arrow.catalog}"
       @click='arrow.catalog = !arrow.catalog'>Каталог</div>
@@ -267,26 +269,50 @@ export default {
 
 <style lang="scss" scoped>
 .filter {
+  display: flex;
+  flex-direction: column;
   margin-right: 25px;
+  margin-top: 89px;
   transition: all 0.3s ease 0s;
+  @media screen and (max-width: 980px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
 .filter_item {
   width: 283px;
-  height: 40px;
   font-size: 15px;
   box-sizing: border-box;
-  border-radius: 20px;
-  padding: 0 15px;
 }
 .find {
+  display: block;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    background: url('../assets/svg/Search.svg') no-repeat;
+    background-size: cover;
+    width: 18px;
+    height: 17px;
+  }
+  @media screen and (max-width: 980px) {
+    width: 30%;
+  }
+}
+.find_input {
+  height: 40px;
+  width: 100%;
   background: #FFFFFF;
   border: 1px solid #BFBFBF;
-  background: url(../assets/svg/Search.svg) no-repeat 248px 10px;
-  background-size: auto 50%;
   margin-bottom: 45px;
+  border-radius: 20px;
+  padding: 0 15px;
   &::placeholder {
     color: #181818;
   }
+
 }
 .arrow {
   position: relative;
@@ -305,6 +331,8 @@ export default {
   background-color: #E6E6E6;
   line-height: 40px;
   margin-bottom: 14px;
+  border-radius: 20px;
+  padding: 0 15px;
   cursor: pointer;
   &::after {
     transition: all 0.3s ease 0s;
@@ -312,10 +340,13 @@ export default {
     top: 12px;
     right: 18px;
   }
+  @media screen and (max-width: 980px) {
+    width: 30%;
+  }
+
 }
 .options {
   margin: 15px;
-  width: 253px;
   &_title {
     border-bottom: 1px solid #BFBFBF;
     padding: 12px 0;
@@ -341,7 +372,6 @@ export default {
 .distance {
   padding: 15px;
   margin-top: 45px;
-  width: 283px;
   &_inputs {
     display: flex;
     justify-content: space-between;
@@ -394,8 +424,8 @@ export default {
 }
 .filter_body {
   padding: 0 15px;
-  width: 283px;
-    transition: 0.3s linear;
+  max-width: 283px;
+  transition: 0.3s linear;
 
 }
 .filter_body_active {
@@ -410,7 +440,6 @@ export default {
   display: flex;
   text-align: center;
   min-height: 28px;
-  width: 253px;
   img {
     width: 18px;
     height: 18px;

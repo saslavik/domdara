@@ -1,25 +1,27 @@
 <template>
   <div class="home">
     <div class="container">
-      <div class="home_nav">
-        <ul class="home_nav-list">
-            <li class="home_nav-item" v-for="link in links" :key="link.title">
-              <router-link
-                tag="button"
-                class="home_nav-link"
-                :to="link.url"
-                :title="link.title">
-                  {{ link.title }}
-              </router-link>
-            </li>
-          </ul>
-      </div>
-      <div class="home_body">
+      <div class="home_content">
         <filter-component/>
-        <router-view/>
+        <div class="home_body">
+          <div class="home_nav">
+            <ul class="home_nav-list">
+              <li class="home_nav-item" v-for="link in links" :key="link.title">
+                <router-link
+                  tag="button"
+                  class="home_nav-link"
+                  :to="link.url"
+                  :title="link.title">
+                    {{ link.title }}
+                </router-link>
+              </li>
+            </ul>
+          </div>
+          <router-view/>
+        </div>
       </div>
     </div>
-      <cash-back-info />
+    <cash-back-info />
   </div>
 </template>
 
@@ -53,8 +55,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.home_content {
+  display: flex;
+  @media screen and (max-width: 980px) {
+    flex-direction: column;
+  }
+}
+.home_body {
+  display: flex;
+  flex-direction: column;
+}
 .home_nav {
-  margin-left: 308px;
   margin-bottom: 20px;
 }
 .home_nav-list {
@@ -85,7 +96,4 @@ export default {
   }
 }
 
-.home_body {
-  display: flex;
-}
 </style>

@@ -52,12 +52,12 @@ export default {
 <style scoped lang="scss">
 .header {
   border: 0.5px solid #BDBDBD;
+  padding: 14px 0;
 }
 .container {
   display: flex;
   justify-content: space-between;
   text-align: center;
-  padding: 14px 0;
 }
 .logo {
   display: flex;
