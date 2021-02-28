@@ -135,15 +135,14 @@ export default {
         cities: false,
         area: false,
       },
-      windowWidth: null,
     };
   },
   mounted() {
+    this.arrow.filtres = (window.innerWidth) > 980;
     window.addEventListener('resize', this.onResize);
   },
   methods: {
     onResize() {
-      this.windowWidth = (window.innerWidth);
       this.arrow.filtres = (window.innerWidth) > 980;
     },
   },
