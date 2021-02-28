@@ -1,99 +1,105 @@
 <template>
   <div class="filter">
-    <div class="find"><input type="text" class="find_input filter_item" placeholder="Поиск"></div>
-    <div class="filter_content">
-      <div class="sort filter_item">
-        <div class="main_options arrow filter_item"
-        :class="{arrow_active: arrow.sort}"
-        @click='arrow.sort = !arrow.sort'>Сортировка</div>
-        <transition name="fade">
-          <div class="filter_body"
-          v-show="arrow.sort"
-          :class="{filter_body_active: arrow.sort}"
-          ></div>
-        </transition>
-      </div >
-      <div class="payments filter_item">
-        <div class="main_options arrow filter_item"
-        :class="{arrow_active: arrow.payments}"
-        @click='arrow.payments = !arrow.payments'
-        >Варианты оплаты</div>
-        <transition name="fade">
-          <div class="filter_body"
-          :class="{filter_body_active: arrow.payments}"></div>
-        </transition>
-      </div>
-      <div class="countries options filter_item">
-        <div class="options_title arrow"
-        :class="{arrow_active: arrow.countries}"
-        @click='arrow.countries = !arrow.countries'>Страна</div>
-        <transition name="fade">
-          <div class="filter_body"
-          v-show="arrow.countries"
-          :class="{filter_body_active: arrow.countries}">
-          item1 <br>
-          item2 <br>
-          item3 <br>
-          item4
-          </div>
-        </transition>
-      </div>
-      <div class="cities options filter_item">
-        <div class="options_title arrow"
-        :class="{arrow_active: arrow.cities}"
-        @click='arrow.cities = !arrow.cities'>Город</div>
-        <transition name="fade">
-          <div class="filter_body"
-          :class="{filter_body_active: arrow.cities}"></div>
-        </transition>
-      </div>
-      <div class="area options filter_item">
-        <div class="options_title arrow"
-        :class="{arrow_active: arrow.area}"
-        @click='arrow.area = !arrow.area'>Район</div>
-        <transition name="fade">
-          <div class="filter_body"
-          :class="{filter_body_active: arrow.area}"></div>
-        </transition>
-      </div>
-      <div class="distance filter_item">
-        Радиус поиска
-        <div class="distance_inputs">
-          <input v-model="distance[0]">
-          <span>—</span>
-          <input v-model="distance[1]">
+    <div class="find filter_box">
+      <input type="text" class="find_input filter_item" placeholder="Поиск">
+    </div>
+    <div class="filter_content filter_box">
+      <div class="filter_item filter_start options_title arrow">Фильтры</div>
+      <div class="filter_end">
+        <div class="sort filter_item">
+          <div class="main_options arrow"
+          :class="{arrow_active: arrow.sort}"
+          @click='arrow.sort = !arrow.sort'>Сортировка</div>
+          <transition name="fade">
+            <div class="filter_body"
+            v-show="arrow.sort"
+            :class="{filter_body_active: arrow.sort}"
+            ></div>
+          </transition>
+        </div >
+        <div class="payments filter_item">
+          <div class="main_options arrow"
+          :class="{arrow_active: arrow.payments}"
+          @click='arrow.payments = !arrow.payments'
+          >Варианты оплаты</div>
+          <transition name="fade">
+            <div class="filter_body"
+            :class="{filter_body_active: arrow.payments}"></div>
+          </transition>
         </div>
-        <vue-slider
-        v-model="distance"
-        :min='1000'
-        :max='25000'
-        :min-range='1000'
-        :process-dragable="true"
-        tooltip="'none'">
-        </vue-slider>
-      </div>
-      <div class="advanced filter_item">
-        <div v-for="item in advanced" :key="item.title"
-        class="checkbox"
-        :class="{advanced_active: item.value}"
-        @click="item.value = !item.value">{{ item.title }}</div>
+        <div class="countries options filter_item">
+          <div class="options_title arrow"
+          :class="{arrow_active: arrow.countries}"
+          @click='arrow.countries = !arrow.countries'>Страна</div>
+          <transition name="fade">
+            <div class="filter_body"
+            v-show="arrow.countries"
+            :class="{filter_body_active: arrow.countries}">
+            item1 <br>
+            item2 <br>
+            item3 <br>
+            item4
+            </div>
+          </transition>
+        </div>
+        <div class="cities options filter_item">
+          <div class="options_title arrow"
+          :class="{arrow_active: arrow.cities}"
+          @click='arrow.cities = !arrow.cities'>Город</div>
+          <transition name="fade">
+            <div class="filter_body"
+            :class="{filter_body_active: arrow.cities}"></div>
+          </transition>
+        </div>
+        <div class="area options filter_item">
+          <div class="options_title arrow"
+          :class="{arrow_active: arrow.area}"
+          @click='arrow.area = !arrow.area'>Район</div>
+          <transition name="fade">
+            <div class="filter_body"
+            :class="{filter_body_active: arrow.area}"></div>
+          </transition>
+        </div>
+        <div class="distance filter_item">
+          Радиус поиска
+          <div class="distance_inputs">
+            <input v-model="distance[0]">
+            <span>—</span>
+            <input v-model="distance[1]">
+          </div>
+          <vue-slider
+          v-model="distance"
+          :min='1000'
+          :max='25000'
+          :min-range='1000'
+          :process-dragable="true"
+          tooltip="'none'">
+          </vue-slider>
+        </div>
+        <div class="advanced filter_item">
+          <div v-for="item in advanced" :key="item.title"
+          class="checkbox"
+          :class="{advanced_active: item.value}"
+          @click="item.value = !item.value">{{ item.title }}</div>
+        </div>
       </div>
     </div>
-    <div class="catalog filter_item">
-      <div class="main_options arrow filter_item"
+    <div class="catalog filter_box">
+      <div class="main_options arrow"
       :class="{arrow_active: arrow.catalog}"
       @click='arrow.catalog = !arrow.catalog'>Каталог</div>
-      <transition name="fade">
-        <div class="filter_body"
-        v-show="arrow.catalog"
-        :class="{filter_body_active: arrow.catalog}">
-          <div class="catalog_item" v-for="item in catalog" :key="item.title">
-            <img :src="require(`../assets/svg/catalog/${item.img}.svg`)" alt="">
-            <div class="catalog_text">{{ item.title }}</div>
+      <div class="catalog_end">
+        <transition name="fade">
+          <div class="filter_body"
+          v-show="arrow.catalog"
+          :class="{filter_body_active: arrow.catalog}">
+            <div class="catalog_item" v-for="item in catalog" :key="item.title">
+              <img :src="require(`../assets/svg/catalog/${item.img}.svg`)" alt="">
+              <div class="catalog_text">{{ item.title }}</div>
+            </div>
           </div>
-        </div>
-      </transition>
-
+        </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -277,12 +283,40 @@ export default {
   @media screen and (max-width: 980px) {
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
+    margin-right: 0;
+  }
+}
+.filter_box {
+  width: 283px;
+  position: relative;
+  @media screen and (max-width: 980px) {
+    width: 30%;
+  }
+}
+.filter_start {
+  display: none;
+  @media screen and (max-width: 980px) {
+    display: block;
+  }
+}
+.filter_end {
+  background-color: #fff;
+  z-index: 5;
+  @media screen and (max-width: 980px) {
+    display: none;
+    position: absolute;
+    top: 45px;
+    border: 1px solid #BFBFBF;
   }
 }
 .filter_item {
-  width: 283px;
   font-size: 15px;
   box-sizing: border-box;
+}
+.filter_content {
+  display: flex;
+  flex-direction: column;
 }
 .find {
   display: block;
@@ -297,9 +331,7 @@ export default {
     width: 18px;
     height: 17px;
   }
-  @media screen and (max-width: 980px) {
-    width: 30%;
-  }
+
 }
 .find_input {
   height: 40px;
@@ -333,6 +365,7 @@ export default {
   margin-bottom: 14px;
   border-radius: 20px;
   padding: 0 15px;
+  // display: block;
   cursor: pointer;
   &::after {
     transition: all 0.3s ease 0s;
@@ -341,7 +374,7 @@ export default {
     right: 18px;
   }
   @media screen and (max-width: 980px) {
-    width: 30%;
+    // width: 30%;
   }
 
 }
@@ -432,14 +465,33 @@ export default {
     overflow: hidden;
     transition: 0.3s linear;
     z-index: -1;
+    height: 100%;
+
 }
 .catalog, .sort, .countries {
-  overflow: hidden;
+  position: relative;
+}
+.catalog {
+  .main_options {
+    @media screen and (max-width: 980px) {
+      border-bottom: 1px solid #BFBFBF;
+      padding: 12px 0;
+      background-color: #fff;
+      cursor: pointer;
+      &::after {
+        transition: all 0.3s ease 0s;
+        background-color: #CFCFCF;
+        top: 16px;
+        right: 4px;
+      }
+    }
+  }
 }
 .catalog_item {
   display: flex;
   text-align: center;
   min-height: 28px;
+
   img {
     width: 18px;
     height: 18px;
@@ -451,6 +503,12 @@ export default {
     display: flex;
     margin: auto 0;
   }
+}
+.catalog_end {
+  overflow: hidden;
+  position: absolute;
+  z-index: 3;
+  background-color: #fff;
 }
 .fade-enter, .fade-leave-to {
   transform: translateY(-100%);
