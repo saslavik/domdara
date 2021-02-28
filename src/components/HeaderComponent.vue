@@ -75,6 +75,9 @@ export default {
 .navbar-list {
   display: flex;
   text-align: center;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 }
 li {
   margin: auto 30px auto 0;

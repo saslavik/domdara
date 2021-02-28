@@ -56,26 +56,44 @@ export default {
     border-radius: 10px;
     margin-top: 100px;
     margin-bottom: 40px;
+    @media screen and (max-width: 768px) {
+      width: calc(36px + (100 - 36) * ((100vw - 320px) / (768 - 320)));
+      height: calc(3px + (10 - 3) * ((100vw - 320px) / (768 - 320)));
+      margin-top: calc(40px + (100 - 40) * ((100vw - 320px) / (768 - 320)));
+      margin-bottom: calc(13px + (40 - 13) * ((100vw - 320px) / (768 - 320)));
+    }
   }
   &_title {
     font-size: 48px;
+    letter-spacing: 0.02em;
     font-weight: 700;
     color: #fff;
     max-width: 990px;
     margin-bottom: 45px;
+    @media screen and (max-width: 768px) {
+      font-size: calc(18px + (48 - 18) * ((100vw - 320px) / (768 - 320)));
+    }
   }
   &_descr {
     font-size: 20px;
+    letter-spacing: 0.02em;
     font-weight: 400;
     color: #fff;
     max-width: 850px;
+    @media screen and (max-width: 768px) {
+      font-size: calc(14px + (20 - 14) * ((100vw - 320px) / (768 - 320)));
+    }
     p {
       margin-bottom: 30px;
     }
     h6 {
       font-size: 24px;
+      letter-spacing: 0.02em;
       font-weight: 700;
       margin-bottom: 30px;
+      @media screen and (max-width: 768px) {
+        font-size: calc(14px + (24 - 14) * ((100vw - 320px) / (768 - 320)));
+      }
     }
   }
 }
@@ -86,11 +104,18 @@ export default {
   display: flex;
   justify-content: center;
   text-transform: uppercase;
+  @media screen and (max-width: 768px) {
+    font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (768 - 320)));
+    margin-top: calc(32px + (0 - 32) * ((100vw - 320px) / (768 - 320)));
+  }
   &_btn {
     cursor: pointer;
     padding: 6px 12px;
     position: relative;
     margin-bottom: 90px;
+    @media screen and (max-width: 768px) {
+      margin-bottom: calc(75px + (90 - 75) * ((100vw - 320px) / (768 - 320)));
+    }
     &::after {
       content: '';
       position: absolute;
@@ -113,17 +138,29 @@ export default {
   right: 60px;
   bottom: 50px;
   border: 4px solid #262626;
+  @media screen and (max-width: 768px) {
+    width: calc(30px + (64 - 30) * ((100vw - 320px) / (768 - 320)));
+    height: calc(30px + (64 - 30) * ((100vw - 320px) / (768 - 320)));
+    right: calc(20px + (60 - 20) * ((100vw - 320px) / (768 - 320)));
+    bottom: calc(20px + (50 - 20) * ((100vw - 320px) / (768 - 320)));
+    border: 2px solid #262626;
+  }
   cursor: pointer;
   &::after {
     content: '';
     position: absolute;
     width: 64px;
     height: 64px;
+
     background-color: #262626;
     mask: url('../assets/svg/ArrowUp.svg') no-repeat 0 0;
     left: 16%;
     top: 16%;
     mask-size: 60%;
+    @media screen and (max-width: 768px) {
+      width: calc(30px + (64 - 30) * ((100vw - 320px) / (768 - 320)));
+      height: calc(30px + (64 - 30) * ((100vw - 320px) / (768 - 320)));
+    }
   }
 }
 </style>

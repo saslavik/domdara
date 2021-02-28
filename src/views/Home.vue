@@ -74,6 +74,10 @@ export default {
 .home_nav-item {
   margin-top: 44px;
   margin-right: 20px;
+  @media screen and (max-width: 576px) {
+    margin-top: 5px;
+    margin-right: calc(15px + (20 - 15) * ((100vw - 320px) / (576 - 320)));
+  }
     &:last-child {
       margin-right: 0;
     }
@@ -86,8 +90,13 @@ export default {
     border-radius: 20px;
     height: 25px;
     width: 105px;
+    letter-spacing: 0.02em;
     cursor: pointer;
-
+    @media screen and (max-width: 576px) {
+      font-size: calc(9px + (15 - 9) * ((100vw - 320px) / (576 - 320)));
+      width: calc(82px + (105 - 82) * ((100vw - 320px) / (576 - 320)));
+      height: calc(19px + (25 - 19) * ((100vw - 320px) / (576 - 320)));
+    }
   }
   .router-link-exact-active {
     background: #7141F0;

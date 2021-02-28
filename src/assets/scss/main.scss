@@ -27,6 +27,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #fff;
+  letter-spacing: 0.02em;
 }
 
 *, *:before, *:after { box-sizing: border-box; }
@@ -75,13 +76,13 @@ section, .section {
   margin: 0 auto;
   padding: 0 20px;
   @media screen and (max-width: $smDesktopWidth) {
-    max-width: $tableWidth;
+    max-width: 960px;
   }
   @media screen and (max-width: $tableWidth) {
-    max-width: $phoneWidth;
+    max-width: 720px;
   }
   @media screen and (max-width: $phoneWidth) {
-    max-width: $smPhoneWidth;
+    max-width: 540px;
   }
 }
 

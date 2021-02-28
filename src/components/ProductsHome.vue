@@ -49,9 +49,13 @@ export default {
     justify-content: space-between;
   }
   &_item {
-    flex: 0 1 204px;
+    width: 204px;
     font-size: 15px;
     margin-bottom: 30px;
+    @media screen and (max-width: 768px) {
+      width: calc(134px + (204 - 134) * ((100vw - 320px) / (768 - 320)));
+      margin-bottom: calc(9px + (15 - 9) * ((100vw - 320px) / (768 - 320)));
+    }
   }
   &_img {
     position: relative;
@@ -67,6 +71,12 @@ export default {
       text-align: center;
       line-height: 27px;
       border-radius: 0 0 13px 0;
+      @media screen and (max-width: 768px) {
+        font-size: calc(8px + (15 - 8) * ((100vw - 320px) / (768 - 320)));
+        width: calc(33px + (51 - 33) * ((100vw - 320px) / (768 - 320)));
+        height: calc(18px + (27 - 18) * ((100vw - 320px) / (768 - 320)));
+        line-height: calc(18px + (27 - 18) * ((100vw - 320px) / (768 - 320)));
+      }
     }
     &_new::before {
       content: 'NEW';
@@ -81,6 +91,9 @@ export default {
     font-size: 20px;
     font-weight: 700;
     margin: 7px 0;
+    @media screen and (max-width: 768px) {
+      font-size: calc(15px + (20 - 15) * ((100vw - 320px) / (768 - 320)));
+    }
   }
   &_row {
     height: 17px;
@@ -88,30 +101,51 @@ export default {
     margin: 9px 0;
     display: flex;
     justify-content: space-between;
+    @media screen and (max-width: 768px) {
+      font-size: calc(9px + (15 - 9) * ((100vw - 320px) / (768 - 320)));
+      height: calc(11px + (17 - 11) * ((100vw - 320px) / (768 - 320)));
+      margin: calc(5px + (9 - 5) * ((100vw - 320px) / (768 - 320))) 0;
+    }
   }
   &_icons {
     display: flex;
     div {
-      padding: 0 13px;
       display: flex;
       align-items: center;
       vertical-align: middle;
+      img {
+        width: 16px;
+        height: 16px;
+        @media screen and (max-width: 768px) {
+          width: calc(9px + (16 - 9) * ((100vw - 320px) / (768 - 320)));
+          height: calc(9px + (16 - 9) * ((100vw - 320px) / (768 - 320)));
+        }
+      }
       &:first-child {
         img {
-          padding-right: 9px;
           &:last-child {
-            padding: 0;
+            margin: 13px;
+            @media screen and (max-width: 768px) {
+              margin: calc(8px + (13 - 8) * ((100vw - 320px) / (768 - 320)));
+            }
           }
         }
       }
+
       &:last-child {
-        padding-right: 0;
+        padding-left: 13px;
         border-left: 2px solid #C4C4C4;
+        @media screen and (max-width: 768px) {
+          padding-left: calc(8px + (13 - 8) * ((100vw - 320px) / (768 - 320)));
+        }
       }
     }
   }
   &_desc {
     font-size: 18px;
+    @media screen and (max-width: 768px) {
+      font-size: calc(9px + (18 - 9) * ((100vw - 320px) / (768 - 320)));
+    }
   }
 }
 </style>

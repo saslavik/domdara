@@ -25,5 +25,10 @@ export default {
     box-sizing: border-box;
     border-radius: 30px;
     cursor: pointer;
+    @media screen and (max-width: 768px) {
+      font-size: calc(14px + (18 - 14) * ((100vw - 320px) / (768 - 320)));
+      height: calc(38px + (60 - 38) * ((100vw - 320px) / (768 - 320)));
+      margin: calc(40px + (75 - 40) * ((100vw - 320px) / (768 - 320))) auto;
+    }
   }
 </style>
