@@ -1,6 +1,7 @@
 <template>
   <div class="filter_content filter_box filter_aid">
     <div class="filter_item filter_start box_item arrow"
+    :class="{arrow_active: arrow.filtres}"
     @click="arrow.filtres = !arrow.filtres">Фильтры</div>
     <div class="filter_end">
       <transition name="fade">
@@ -11,55 +12,66 @@
             <div class="main_options arrow"
             :class="{arrow_active: arrow.sort}"
             @click='arrow.sort = !arrow.sort'>Сортировка</div>
-            <transition name="fade">
-              <div class="filter_body"
-              v-show="arrow.sort"
-              :class="{filter_body_active: arrow.sort}"
-              ></div>
-            </transition>
+            <div class="item_end">
+              <transition name="fade">
+                <div class="filter_body"
+                v-show="arrow.sort"
+                :class="{filter_body_active: arrow.sort}"
+                >
+                test <br>test <br>test <br>test <br></div>
+              </transition>
+            </div>
           </div >
           <div class="payments filter_item">
             <div class="main_options arrow"
             :class="{arrow_active: arrow.payments}"
             @click='arrow.payments = !arrow.payments'
             >Варианты оплаты</div>
-            <transition name="fade">
+            <div class="item_end">
+              <transition name="fade">
               <div class="filter_body"
               :class="{filter_body_active: arrow.payments}"></div>
             </transition>
+            </div>
           </div>
           <div class="countries options filter_item">
             <div class="options_title arrow"
             :class="{arrow_active: arrow.countries}"
             @click='arrow.countries = !arrow.countries'>Страна</div>
-            <transition name="fade">
-              <div class="filter_body"
-              v-show="arrow.countries"
-              :class="{filter_body_active: arrow.countries}">
-              item1 <br>
-              item2 <br>
-              item3 <br>
-              item4
-              </div>
-            </transition>
+            <div class="item_end">
+              <transition name="fade">
+                <div class="filter_body"
+                v-show="arrow.countries"
+                :class="{filter_body_active: arrow.countries}">
+                item1 <br>
+                item2 <br>
+                item3 <br>
+                item4
+                </div>
+              </transition>
+            </div>
           </div>
           <div class="cities options filter_item">
             <div class="options_title arrow"
             :class="{arrow_active: arrow.cities}"
             @click='arrow.cities = !arrow.cities'>Город</div>
-            <transition name="fade">
-              <div class="filter_body"
-              :class="{filter_body_active: arrow.cities}"></div>
-            </transition>
+            <div class="item_end">
+              <transition name="fade">
+                <div class="filter_body"
+                :class="{filter_body_active: arrow.cities}"></div>
+              </transition>
+            </div>
           </div>
           <div class="area options filter_item">
             <div class="options_title arrow"
             :class="{arrow_active: arrow.area}"
             @click='arrow.area = !arrow.area'>Район</div>
-            <transition name="fade">
-              <div class="filter_body"
-              :class="{filter_body_active: arrow.area}"></div>
-            </transition>
+            <div class="item_end">
+              <transition name="fade">
+                <div class="filter_body"
+                :class="{filter_body_active: arrow.area}"></div>
+              </transition>
+            </div>
           </div>
           <div class="distance filter_item">
             Радиус поиска
@@ -160,7 +172,11 @@ export default {
     mask-size: cover;
     width: 16px;
     height: 16px;
+
   }
+}
+.item_end {
+  overflow: hidden;
 }
 .distance {
   padding: 15px;
@@ -281,8 +297,11 @@ export default {
     &::after {
       transition: all 0.3s ease 0s;
       background-color: #CFCFCF;
-      top: 12px;
-      right: 4px;
+      width: 9px;
+      height: 9px;
+      top: 15px;
+      transform: rotate(90deg);
+      margin-left: 9px;
     }
   }
 }
@@ -293,6 +312,9 @@ export default {
     transform: rotate(90deg);
     background-color: #7141F0;
     transition: all 0.3s ease 0s;
+    @media screen and (max-width: 980px) {
+      transform: rotate(-90deg);
+    }
   }
 }
 .filter_aid {
@@ -301,7 +323,7 @@ export default {
   }
 }
 .filter_body {
-  // padding: 0 15px;
+  padding-bottom: 10px;
   max-width: 283px;
   transition: 0.3s linear;
 }

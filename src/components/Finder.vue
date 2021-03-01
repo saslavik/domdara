@@ -30,7 +30,7 @@ export default {
   }
   @media screen and (max-width: 576px) {
     // display: flex;
-    min-width: 80%;
+    min-width: 75%;
     &::after {
       content: '';
       background-color: #bdbdbd;
