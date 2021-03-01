@@ -1,5 +1,5 @@
 <template>
-  <div class="loadMore"  @click="$emit('items-btn', 2)">
+  <div class="loadMore"  @click="$emit('items-btn', 8)">
     ПОКАЗАТЬ ЕЩЕ
   </div>
 </template>

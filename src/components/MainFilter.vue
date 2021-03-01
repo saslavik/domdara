@@ -1,15 +1,17 @@
 <template>
-  <div class="filter_content filter_box filter_aid">
-    <div class="filter_item filter_start box_item arrow"
-    :class="{arrow_active: arrow.filtres}"
+  <div class="filter_content filter_box">
+    <!-- кнопка выпадающего меню фильтры -->
+    <div class="filter_item filter_top category arrow"
+    :class="{filter_top_active: arrow.filtres}"
     @click="arrow.filtres = !arrow.filtres">Фильтры</div>
-    <div class="filter_end">
+    <!-- список фильтров -->
+    <div class="filter_bottom">
       <transition name="fade">
         <div class="filter_body"
         v-show="arrow.filtres"
         :class="{filter_body_active: arrow.filtres}">
           <div class="sort filter_item">
-            <div class="main_options arrow"
+            <div class="line_grey arrow"
             :class="{arrow_active: arrow.sort}"
             @click='arrow.sort = !arrow.sort'>Сортировка</div>
             <div class="item_end">
@@ -23,19 +25,21 @@
             </div>
           </div >
           <div class="payments filter_item">
-            <div class="main_options arrow"
+            <div class="line_grey arrow"
             :class="{arrow_active: arrow.payments}"
             @click='arrow.payments = !arrow.payments'
             >Варианты оплаты</div>
             <div class="item_end">
               <transition name="fade">
               <div class="filter_body"
-              :class="{filter_body_active: arrow.payments}"></div>
+              v-show="arrow.payments"
+              :class="{filter_body_active: arrow.payments}">
+              test <br>test <br>test <br>test <br></div>
             </transition>
             </div>
           </div>
-          <div class="countries options filter_item">
-            <div class="options_title arrow"
+          <div class="countries line_white filter_item">
+            <div class="line_white_title arrow"
             :class="{arrow_active: arrow.countries}"
             @click='arrow.countries = !arrow.countries'>Страна</div>
             <div class="item_end">
@@ -51,25 +55,29 @@
               </transition>
             </div>
           </div>
-          <div class="cities options filter_item">
-            <div class="options_title arrow"
+          <div class="cities line_white filter_item">
+            <div class="line_white_title arrow"
             :class="{arrow_active: arrow.cities}"
             @click='arrow.cities = !arrow.cities'>Город</div>
             <div class="item_end">
               <transition name="fade">
                 <div class="filter_body"
-                :class="{filter_body_active: arrow.cities}"></div>
+                v-show="arrow.payments"
+                :class="{filter_body_active: arrow.cities}">
+                test <br>test <br>test <br>test<br></div>
               </transition>
             </div>
           </div>
-          <div class="area options filter_item">
-            <div class="options_title arrow"
+          <div class="area line_white filter_item">
+            <div class="line_white_title arrow"
             :class="{arrow_active: arrow.area}"
             @click='arrow.area = !arrow.area'>Район</div>
             <div class="item_end">
               <transition name="fade">
                 <div class="filter_body"
-                :class="{filter_body_active: arrow.area}"></div>
+                v-show="arrow.area"
+                :class="{filter_body_active: arrow.area}">
+                test <br>test <br>test <br>test <br></div>
               </transition>
             </div>
           </div>
@@ -162,6 +170,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// стрелка справа от списка
 .arrow {
   position: relative;
   z-index: 5;
@@ -172,12 +181,12 @@ export default {
     mask-size: cover;
     width: 16px;
     height: 16px;
-
   }
 }
 .item_end {
   overflow: hidden;
 }
+// радиус поиска
 .distance {
   padding: 15px;
   margin-top: 45px;
@@ -201,7 +210,7 @@ export default {
     }
   }
 }
-
+// чекбоксы
 .advanced {
   padding: 15px;
   .checkbox {
@@ -234,22 +243,8 @@ export default {
     }
   }
 }
-.sort, .countries {
-  position: relative;
-}
-.filter_start {
-  padding: 0 15px;
-  margin-bottom: 14px;
-  display: none;
-  line-height: 40px;
-  @media screen and (max-width: 980px) {
-    display: block;
-  }
-  @media screen and (max-width: 576px) {
-    margin-bottom: 0;
-  }
-}
-.filter_end {
+// Скрывающееся меню фильтров в мобайл версии
+.filter_bottom {
   background-color: #fff;
   z-index: 5;
   overflow: hidden;
@@ -261,7 +256,8 @@ export default {
   font-size: 15px;
   box-sizing: border-box;
 }
-.main_options {
+// серая строка фильтра
+.line_grey {
   background-color: #E6E6E6;
   line-height: 40px;
   margin-bottom: 14px;
@@ -275,7 +271,8 @@ export default {
     right: 18px;
   }
 }
-.options {
+// белая строка фильтра
+.line_white {
   margin: 15px;
   &_title {
     border-bottom: 1px solid #BFBFBF;
@@ -290,8 +287,14 @@ export default {
     }
   }
 }
-.box_item {
+// Кнопка для выпаданию фильтров
+.filter_top {
+  padding: 0 15px;
+  margin-bottom: 14px;
+  display: none;
+  line-height: 40px;
   @media screen and (max-width: 980px) {
+    display: block;
     background-color: #fff;
     cursor: pointer;
     &::after {
@@ -303,8 +306,22 @@ export default {
       transform: rotate(90deg);
       margin-left: 9px;
     }
+    &_active {
+      color: #7141F0;
+      transition: all 0.3s ease 0s;
+      &::after {
+        transform: rotate(90deg);
+        background-color: #7141F0;
+        transition: all 0.3s ease 0s;
+        transform: rotate(-90deg);
+      }
+    }
+  }
+  @media screen and (max-width: 576px) {
+    margin-bottom: 0;
   }
 }
+// стрелка при выборе строки фильтра
 .arrow_active {
   color: #7141F0;
   transition: all 0.3s ease 0s;
@@ -313,26 +330,29 @@ export default {
     background-color: #7141F0;
     transition: all 0.3s ease 0s;
     @media screen and (max-width: 980px) {
-      transform: rotate(-90deg);
+      transform: rotate(90deg);
     }
   }
 }
-.filter_aid {
+
+.filter_content {
   @media screen and (min-width: 981px) {
     display: block;
   }
 }
+// выпадающее меню каждой категории фильтров
 .filter_body {
-  padding-bottom: 10px;
-  max-width: 283px;
   transition: 0.3s linear;
 }
 .filter_body_active {
-    overflow: hidden;
-    transition: 0.3s linear;
-    z-index: -1;
-    height: 100%;
+  overflow: hidden;
+  transition: 0.3s linear;
+  z-index: -1;
+  height: 100%;
+  padding-bottom: 10px;
+  max-width: 283px;
 }
+// анимация
 .fade-enter, .fade-leave-to {
   transform: translateY(-100%);
 }

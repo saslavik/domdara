@@ -97,6 +97,7 @@ export default {
     }
   }
 }
+// кнопка свернуть
 .minimise {
   color: #fff;
   font-size: 18px;
@@ -130,6 +131,7 @@ export default {
     }
   }
 }
+// кнопка подняться в начало
 .arrowUp {
   width: 64px;
   height: 64px;

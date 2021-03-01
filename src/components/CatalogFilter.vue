@@ -1,6 +1,6 @@
 <template>
   <div class="catalog filter_box">
-    <div class="main_options arrow box_item"
+    <div class="line_grey arrow catalog_top"
     :class="{arrow_active: arrow.catalog}"
     @click='arrow.catalog = !arrow.catalog'>Каталог</div>
     <div class="catalog_end">
@@ -161,7 +161,7 @@ export default {
     height: 16px;
   }
 }
-.main_options {
+.line_grey {
   background-color: #E6E6E6;
   line-height: 40px;
   margin-bottom: 14px;
@@ -218,7 +218,7 @@ export default {
   z-index: 3;
   background-color: #fff;
 }
-.box_item {
+.catalog_top {
   @media screen and (max-width: 980px) {
     background-color: #fff;
     cursor: pointer;
@@ -245,6 +245,7 @@ export default {
     }
   }
 }
+// анимация
 .fade-enter, .fade-leave-to {
   transform: translateY(-100%);
 }

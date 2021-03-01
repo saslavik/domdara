@@ -1,6 +1,6 @@
 <template>
   <div class="find filter_box">
-    <input type="text" class="find_input filter_item" placeholder="Поиск">
+    <input type="text" class="find_input" placeholder="Поиск">
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
     position: absolute;
     right: 16px;
     top: 12px;
-    mask: url("../assets/svg/Search.svg") no-repeat;
+    mask: url("../../assets/svg/Search.svg") no-repeat;
     mask-size: cover;
     background-color: #181818;
     width: 18px;
@@ -29,7 +29,6 @@ export default {
     min-width: 40%;
   }
   @media screen and (max-width: 576px) {
-    // display: flex;
     min-width: 75%;
     &::after {
       content: '';

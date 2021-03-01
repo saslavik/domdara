@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Finder from '@/components/Finder.vue';
+import Finder from '@/components/UI/Finder.vue';
 import MainFilter from '@/components/MainFilter.vue';
 import CatalogFilter from '@/components/CatalogFilter.vue';
 
@@ -46,6 +46,7 @@ export default {
     justify-content: start;
   }
 }
+
 .filter_box {
   width: 283px;
   position: relative;
@@ -56,7 +57,7 @@ export default {
     width: 45%;
   }
 }
-
+// кнопки возсле поиска в мобайл версии
 .shopingCart {
   display: none;
   fill: none;

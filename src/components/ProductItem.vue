@@ -1,0 +1,182 @@
+<template>
+  <div class="product_item">
+    <div class="product_img"
+    :class="{product_img_new: imgNew, product_img_top: imgTop}">
+      <img :src="require(`../assets/img/${image}.jpg`)" alt="">
+    </div>
+    <div class="product_row">
+      Кэшбэк 20%
+      <div class="product_icons">
+        <div>
+          <img src="../assets/svg/Z.svg" alt=""><img src="../assets/svg/Score.svg" alt="">
+        </div>
+        <div>
+          <img src="../assets/svg/Action.svg" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="product_title">{{ title }}</div>
+    <div class="product_desc">{{ desc }}</div>
+    <div class="product_additionalInfo" v-if="additionalInfo">
+      <div class="additionalInfo_card">
+        <img src="../assets/svg/Card.svg" alt="">3958
+      </div>
+      <div class="additionalInfo_arrow">
+        <img src="../assets/svg/Arrow.svg" alt="">2947
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: [
+    'img',
+    'title',
+    'desc',
+    'imgNew',
+    'imgTop',
+    'additionalInfo',
+  ],
+  computed: {
+    image() {
+      return this.img;
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.product {
+  width: 100%;
+  &_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  &_item {
+    width: 204px;
+    font-size: 15px;
+    margin-bottom: 30px;
+    @media screen and (max-width: 768px) {
+      width: calc(134px + (204 - 134) * ((100vw - 320px) / (768 - 320)));
+      margin-bottom: calc(9px + (15 - 9) * ((100vw - 320px) / (768 - 320)));
+    }
+  }
+  &_img {
+    position: relative;
+    &::before {
+      position: absolute;
+      color: #181818;
+      font-size: 15px;
+      font-weight: 700;
+      top: 0;
+      left: 0;
+      width: 51px;
+      height: 27px;
+      text-align: center;
+      line-height: 27px;
+      border-radius: 0 0 13px 0;
+      @media screen and (max-width: 768px) {
+        font-size: calc(8px + (15 - 8) * ((100vw - 320px) / (768 - 320)));
+        width: calc(33px + (51 - 33) * ((100vw - 320px) / (768 - 320)));
+        height: calc(18px + (27 - 18) * ((100vw - 320px) / (768 - 320)));
+        line-height: calc(18px + (27 - 18) * ((100vw - 320px) / (768 - 320)));
+      }
+    }
+    &_new::before {
+      content: 'NEW';
+      background-color: #FFE000;
+    }
+    &_top::before {
+      content: 'TOP';
+      background-color: #04E0E3;
+    }
+  }
+  &_title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 7px 0;
+    @media screen and (max-width: 768px) {
+      font-size: calc(15px + (20 - 15) * ((100vw - 320px) / (768 - 320)));
+    }
+  }
+  &_row {
+    height: 17px;
+    font-weight: 500;
+    margin: 9px 0;
+    display: flex;
+    justify-content: space-between;
+    @media screen and (max-width: 768px) {
+      font-size: calc(9px + (15 - 9) * ((100vw - 320px) / (768 - 320)));
+      height: calc(11px + (17 - 11) * ((100vw - 320px) / (768 - 320)));
+      margin: calc(5px + (9 - 5) * ((100vw - 320px) / (768 - 320))) 0;
+    }
+  }
+  &_icons {
+    display: flex;
+    div {
+      display: flex;
+      align-items: center;
+      vertical-align: middle;
+      img {
+        width: 16px;
+        height: 16px;
+        @media screen and (max-width: 768px) {
+          width: calc(9px + (16 - 9) * ((100vw - 320px) / (768 - 320)));
+          height: calc(9px + (16 - 9) * ((100vw - 320px) / (768 - 320)));
+        }
+      }
+      &:first-child {
+        img {
+          &:last-child {
+            margin: 13px;
+            @media screen and (max-width: 768px) {
+              margin: calc(8px + (13 - 8) * ((100vw - 320px) / (768 - 320)));
+            }
+          }
+        }
+      }
+
+      &:last-child {
+        padding-left: 13px;
+        border-left: 2px solid #C4C4C4;
+        @media screen and (max-width: 768px) {
+          padding-left: calc(8px + (13 - 8) * ((100vw - 320px) / (768 - 320)));
+        }
+      }
+    }
+  }
+  &_desc {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 15px 0;
+    @media screen and (max-width: 768px) {
+      font-size: calc(9px + (18 - 9) * ((100vw - 320px) / (768 - 320)));
+      margin: calc(9px + (15 - 9) * ((100vw - 320px) / (768 - 320))) 0;
+    }
+  }
+  &_additionalInfo {
+    display: flex;
+    img {
+      margin-right: 7px;
+      @media screen and (max-width: 768px) {
+        width: calc(11px + (17 - 11) * ((100vw - 320px) / (768 - 320)));
+        margin-right: calc(4px + (7 - 4) * ((100vw - 320px) / (768 - 320)));
+      }
+    }
+    @media screen and (max-width: 768px) {
+      font-size: calc(9px + (15 - 9) * ((100vw - 320px) / (768 - 320)));
+      margin: calc(0px + (15 - 0) * ((100vw - 320px) / (768 - 320))) 0;
+    }
+  }
+}
+.additionalInfo_card {
+  display: flex;
+  align-items: center;
+  margin-right: 17px;
+  @media screen and (max-width: 768px) {
+    margin-right: calc(11px + (17 - 11) * ((100vw - 320px) / (768 - 320)));
+  }
+}
+</style>
