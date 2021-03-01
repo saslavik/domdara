@@ -62,7 +62,7 @@
             <div class="item_end">
               <transition name="fade">
                 <div class="filter_body"
-                v-show="arrow.payments"
+                v-show="arrow.cities"
                 :class="{filter_body_active: arrow.cities}">
                 test <br>test <br>test <br>test<br></div>
               </transition>

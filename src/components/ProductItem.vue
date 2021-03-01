@@ -55,16 +55,29 @@ export default {
     justify-content: space-between;
   }
   &_item {
-    width: 204px;
+    flex: 0 1 24%;
+    // width: 204px;
     font-size: 15px;
     margin-bottom: 30px;
+    @media screen and (max-width: 1100px) {
+      flex: 0 1 32%;
+    }
+    @media screen and (max-width: 980px) {
+      flex: 0 1 24%;
+    }
     @media screen and (max-width: 768px) {
-      width: calc(134px + (204 - 134) * ((100vw - 320px) / (768 - 320)));
+      flex: 0 1 32%;
       margin-bottom: calc(9px + (15 - 9) * ((100vw - 320px) / (768 - 320)));
+    }
+    @media screen and (max-width: 576px) {
+      flex: 0 1 48%;
     }
   }
   &_img {
     position: relative;
+    img {
+      width: 100%;
+    }
     &::before {
       position: absolute;
       color: #181818;
