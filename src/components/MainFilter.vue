@@ -83,10 +83,22 @@
           </div>
           <div class="distance filter_item">
             Радиус поиска
-            <div class="distance_inputs">
-              <input v-model="distance[0]">
+            <div class="distance_row">
+              <div class="distance_input">
+                <input type="text"
+                v-model="distance[0]"
+                v-bind:style="{width: width.from + 5 + 'px'}">
+                <div class="input_fake_from">{{ distance[0] }}</div>
+                 м
+              </div>
               <span>—</span>
-              <input v-model="distance[1]">
+              <div class="distance_input">
+                <input type="text"
+                v-model="distance[1]"
+                v-bind:style="{width: width.to + 5 + 'px'}">
+                <div class="input_fake_to">{{ distance[1] }}</div>
+                 м
+              </div>
             </div>
             <vue-slider
             v-model="distance"
@@ -120,6 +132,7 @@ export default {
     return {
       // Радиус поиска
       distance: [1000, 25000],
+      calc: 30,
       // Чекбоксы
       advanced: {
         rating: {
@@ -155,15 +168,32 @@ export default {
         cities: false,
         area: false,
       },
+      width: {
+        from: null,
+        to: null,
+      },
     };
   },
   mounted() {
     this.arrow.filtres = (window.innerWidth) > 980;
     window.addEventListener('resize', this.onResize);
   },
+  // watch: {
+  //   distance: {
+  //     handler(val, oldVal) {
+  //       this.inputResize();
+  //       return (val, oldVal);
+  //     },
+  //     deep: true,
+  //   },
+  // },
   methods: {
     onResize() {
       this.arrow.filtres = (window.innerWidth) > 980;
+    },
+    inputResize() {
+      this.width.from = this.$el.querySelector('.input_fake_from').clientWidth;
+      this.width.to = this.$el.querySelector('.input_fake_to').clientWidth;
     },
   },
 };
@@ -190,7 +220,7 @@ export default {
 .distance {
   padding: 15px;
   margin-top: 45px;
-  &_inputs {
+  &_row {
     display: flex;
     justify-content: space-between;
     text-align: center;
@@ -200,11 +230,21 @@ export default {
       color: #C4C4C4;
     }
   }
-  input {
+  &_input {
     width: 111px;
     height: 43px;
     text-align: center;
+    border: 1px solid #DCDFE6;
     border-radius: 30px;
+    justify-content: center;
+    box-sizing:border-box;
+    input {
+      // width: 60%;
+      // box-sizing:border-box;
+    }
+    .input_fake_to, .input_fake_from {
+      position: absolute;
+    }
     @media screen and (max-width: 980px) {
       width: 80px;
     }
@@ -250,6 +290,9 @@ export default {
   overflow: hidden;
   @media screen and (max-width: 980px) {
     position: absolute;
+  }
+  @media screen and (max-width: 576px) {
+    width: 100vh;
   }
 }
 .filter_item {
