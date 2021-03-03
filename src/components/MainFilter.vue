@@ -5,8 +5,8 @@
     :class="{filter_top_active: arrow.filtres}"
     @click="arrow.filtres = !arrow.filtres">Фильтры</div>
     <!-- список фильтров -->
-    <div class="filter_bottom">
-      <transition name="fade">
+    <div class="filter_bottom"
+    :class="{filter_bottom_active: arrow.filtres}">
         <div class="filter_body"
         v-show="arrow.filtres"
         :class="{filter_body_active: arrow.filtres}">
@@ -14,12 +14,9 @@
             <div class="line_grey arrow"
             :class="{arrow_active: arrow.sort}"
             @click='arrow.sort = !arrow.sort'>Сортировка</div>
-            <div class="item_end">
-              <transition name="fade">
-                <div class="filter_body"
-                v-show="arrow.sort"
-                :class="{filter_body_active: arrow.sort}"
-                >
+            <div class="item_end"
+            :class="{item_end_active: arrow.sort}">
+                <div class="filter_body">
                 <p>По умолчанию</p>
                 <p>Новые</p>
                 <p>Популярность</p>
@@ -29,7 +26,6 @@
                 <p>С доставкой</p>
                 <p>По убыванию кэшбэка</p>
                 </div>
-              </transition>
             </div>
           </div >
           <div class="payments filter_item">
@@ -37,61 +33,51 @@
             :class="{arrow_active: arrow.payments}"
             @click='arrow.payments = !arrow.payments'
             >Варианты оплаты</div>
-            <div class="item_end">
-              <transition name="fade">
-              <div class="filter_body"
-              v-show="arrow.payments"
-              :class="{filter_body_active: arrow.payments}">
+            <div class="item_end"
+            :class="{item_end_active: arrow.payments}">
+              <div class="filter_body">
               <p>Все</p>
               <p>EXO</p>
               <p>Картой ДОМДАРА</p>
               <p>Наличными или картой</p>
               </div>
-            </transition>
             </div>
           </div>
           <div class="countries line_white filter_item">
             <div class="line_white_title arrow"
             :class="{arrow_active: arrow.countries}"
             @click='arrow.countries = !arrow.countries'>Страна</div>
-            <div class="item_end">
-              <transition name="fade">
+              <div class="item_end"
+              :class="{item_end_active: arrow.countries}">
                 <div class="filter_body"
-                v-show="arrow.countries"
-                :class="{filter_body_active: arrow.countries}">
+                v-show="arrow.countries">
                 <finder />
                 <p>Беларусь</p>
                 <p>Россия</p>
                 <p>Украина</p>
                 </div>
-              </transition>
             </div>
           </div>
           <div class="cities line_white filter_item">
             <div class="line_white_title arrow"
             :class="{arrow_active: arrow.cities}"
             @click='arrow.cities = !arrow.cities'>Город</div>
-            <div class="item_end">
-              <transition name="fade">
-                <div class="filter_body"
-                v-show="arrow.cities"
-                :class="{filter_body_active: arrow.cities}">
+            <div class="item_end"
+            :class="{item_end_active: arrow.cities}">
+                <div class="filter_body">
                 <finder />
                 </div>
-              </transition>
             </div>
           </div>
           <div class="area line_white filter_item">
             <div class="line_white_title arrow"
             :class="{arrow_active: arrow.area}"
             @click='arrow.area = !arrow.area'>Район</div>
-            <div class="item_end">
-              <transition name="fade">
+            <div class="item_end"
+            :class="{item_end_active: arrow.area}">
                 <div class="filter_body"
-                v-show="arrow.area"
-                :class="{filter_body_active: arrow.area}">
+                v-show="arrow.area">
                 test <br>test <br>test <br>test <br></div>
-              </transition>
             </div>
           </div>
           <div class="distance filter_item">
@@ -127,7 +113,6 @@
             @click="item.value = !item.value">{{ item.title }}</div>
           </div>
         </div>
-      </transition>
     </div>
   </div>
 </template>
@@ -241,6 +226,11 @@ export default {
 }
 .item_end {
   overflow: hidden;
+  max-height: 0;
+  transition: all 0.3s ease 0s;
+  &_active {
+    max-height: 1000px;
+  }
 }
 // радиус поиска
 .distance {
@@ -285,7 +275,6 @@ export default {
     padding: 0 0 0 28px;
     line-height: 28px;
     position: relative;
-    transition: all 0.3s ease 0s;
     input{
       display: none;
     }
@@ -315,6 +304,8 @@ export default {
   background-color: #fff;
   z-index: 5;
   overflow: hidden;
+  max-height: 0;
+  transition: all 0.3s ease;
   @media screen and (max-width: 980px) {
     position: absolute;
   }
@@ -323,6 +314,9 @@ export default {
     width: 100%;
     padding: 0 15px;
     max-width: 100%;
+  }
+  &_active {
+    max-height: 10000px;
   }
 }
 .filter_item {
@@ -427,14 +421,6 @@ export default {
 }
 // выпадающее меню каждой категории фильтров
 .filter_body {
-  transition: 0.3s linear;
-}
-.filter_body_active {
-  overflow: hidden;
-  transition: 0.3s linear;
-  z-index: -1;
-  height: 100%;
-  padding-bottom: 10px;
   p {
     margin-left: 50px;
     margin-bottom: 8px;
@@ -443,13 +429,5 @@ export default {
       color: #7141F0;
     }
   }
-}
-// анимация
-.fade-enter, .fade-leave-to {
-  transform: translateY(-100%);
-}
-
-.fade-enter-to, .fade-leave {
-  transform: translateY(0);
 }
 </style>

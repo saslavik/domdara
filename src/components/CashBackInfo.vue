@@ -12,7 +12,7 @@
           <h6>Как покупать с кэшбэком?</h6>
         </div>
         <div class="descr_minimise"
-        :style="{height: minimiseHeight + 'px'}">
+        :class="{descr_minimise_active: minimise}">
           <div class="minimise_content">
             <p>1. Вы регистрируетесь у нас на нашем сайте domdara.com<br>
               2. Выбираете магазин на нашей платформе дарамаркет<br>
@@ -32,7 +32,7 @@
       <div class="minimise">
         <div class="minimise_btn"
         :class="{minimise_btn_active: !minimise}"
-        @click="minimiseShow">
+        @click="minimise = !minimise">
           Свернуть
         </div>
       </div>
@@ -48,24 +48,11 @@ export default {
   data() {
     return {
       minimise: false,
-      minimiseHeight: null,
     };
-  },
-  mounted() {
-    window.addEventListener('resize', this.minimHeight);
-    this.minimHeight();
   },
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
-    },
-    minimiseShow() {
-      this.minimise = !this.minimise;
-      this.minimHeight();
-    },
-    minimHeight() {
-      if (this.minimise) this.minimiseHeight = this.$el.querySelector('.minimise_content').clientHeight;
-      else this.minimiseHeight = 0;
     },
   },
 };
@@ -125,11 +112,11 @@ export default {
   }
 }
 .descr_minimise {
-  height: 0;
+  max-height: 0;
   overflow: hidden;
-  transition: height 0.3s linear;
+  transition: all 0.3s linear;
   &_active {
-    height: 100%;
+    max-height: 600px;
   }
 }
 .minimise_content {

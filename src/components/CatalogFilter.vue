@@ -3,8 +3,8 @@
     <div class="line_grey arrow catalog_top"
     :class="{arrow_active: arrowCatalog}"
     @click='arrowCatalog = !arrowCatalog'>Каталог</div>
-    <div class="catalog_end">
-      <transition name="fade">
+    <div class="catalog_bottom"
+    :class="{catalog_bottom_active: arrowCatalog}">
         <div class="filter_body"
         v-show="arrowCatalog"
         :class="{filter_body_active: arrowCatalog}">
@@ -16,12 +16,12 @@
               <img :src="require(`../assets/svg/catalog/${item.img}.svg`)" alt="">
               <div class="catalog_text">{{ item.title }}</div>
             </div>
-            <div class="catalog_item_bottom" v-show="item.childActive">
+            <div class="catalog_item_bottom"
+            :class="{catalog_item_bottom_active: item.childActive}">
               <p class="catalog_child" v-for="child in item.child" :key="child">{{ child }}</p>
             </div>
           </div>
         </div>
-      </transition>
     </div>
   </div>
 </template>
@@ -286,12 +286,18 @@ export default {
   }
   &_bottom {
     display: flex;
+    overflow: hidden;
     flex-direction: column;
     margin-bottom: 10px;
+    max-height: 0;
+    transition: all 0.3s linear;
     p {
       text-align: left;
       margin-top: 8px;
       margin-left: 50px;
+    }
+    &_active {
+      max-height: 10000px;
     }
   }
   img {
@@ -315,14 +321,19 @@ export default {
     }
   }
 }
-.catalog_end {
+.catalog_bottom {
   overflow: hidden;
   position: absolute;
   z-index: 3;
   background-color: #fff;
+  max-height: 0;
+  transition: all 0.3s ease;
   @media screen and (max-width: 576px) {
     left: 0;
     width: 100%;
+  }
+  &_active {
+    max-height: 10000px;
   }
 }
 .catalog_top {
@@ -351,12 +362,5 @@ export default {
       transform: rotate(-90deg);
     }
   }
-}
-// анимация
-.fade-enter, .fade-leave-to {
-  transform: translateY(-100%);
-}
-.fade-enter-to, .fade-leave {
-  transform: translateY(0);
 }
 </style>
