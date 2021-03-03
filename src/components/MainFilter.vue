@@ -20,7 +20,15 @@
                 v-show="arrow.sort"
                 :class="{filter_body_active: arrow.sort}"
                 >
-                test <br>test <br>test <br>test <br></div>
+                <p>По умолчанию</p>
+                <p>Новые</p>
+                <p>Популярность</p>
+                <p>Алфавит</p>
+                <p>Рейтинг</p>
+                <p>По возрастанию кэшбэка</p>
+                <p>С доставкой</p>
+                <p>По убыванию кэшбэка</p>
+                </div>
               </transition>
             </div>
           </div >
@@ -34,7 +42,11 @@
               <div class="filter_body"
               v-show="arrow.payments"
               :class="{filter_body_active: arrow.payments}">
-              test <br>test <br>test <br>test <br></div>
+              <p>Все</p>
+              <p>EXO</p>
+              <p>Картой ДОМДАРА</p>
+              <p>Наличными или картой</p>
+              </div>
             </transition>
             </div>
           </div>
@@ -47,10 +59,10 @@
                 <div class="filter_body"
                 v-show="arrow.countries"
                 :class="{filter_body_active: arrow.countries}">
-                item1 <br>
-                item2 <br>
-                item3 <br>
-                item4
+                <finder />
+                <p>Беларусь</p>
+                <p>Россия</p>
+                <p>Украина</p>
                 </div>
               </transition>
             </div>
@@ -64,7 +76,8 @@
                 <div class="filter_body"
                 v-show="arrow.cities"
                 :class="{filter_body_active: arrow.cities}">
-                test <br>test <br>test <br>test<br></div>
+                <finder />
+                </div>
               </transition>
             </div>
           </div>
@@ -88,16 +101,14 @@
                 <input type="text"
                 v-model="distance[0]"
                 v-bind:style="{width: width.from + 5 + 'px'}">
-                <div class="input_fake_from">{{ distance[0] }}</div>
-                 м
+                <div class="input_fake_from">{{ distance[0] }}</div>м
               </div>
               <span>—</span>
               <div class="distance_input">
                 <input type="text"
                 v-model="distance[1]"
                 v-bind:style="{width: width.to + 5 + 'px'}">
-                <div class="input_fake_to">{{ distance[1] }}</div>
-                 м
+                <div class="input_fake_to">{{ distance[1] }}</div>м
               </div>
             </div>
             <vue-slider
@@ -123,10 +134,12 @@
 
 <script>
 import VueSlider from 'vue-slider-component';
+import Finder from '@/components/UI/Finder.vue';
 
 export default {
   components: {
     VueSlider,
+    Finder,
   },
   data() {
     return {
@@ -169,31 +182,44 @@ export default {
         area: false,
       },
       width: {
-        from: null,
-        to: null,
+        from: 35,
+        to: 44,
       },
+      screenMobileWidth: null,
     };
   },
   mounted() {
-    this.arrow.filtres = (window.innerWidth) > 980;
-    window.addEventListener('resize', this.onResize);
+    this.screenMobileWidth = window.innerWidth > 980;
+    window.addEventListener('resize', this.checkResize);
   },
-  // watch: {
-  //   distance: {
-  //     handler(val, oldVal) {
-  //       this.inputResize();
-  //       return (val, oldVal);
-  //     },
-  //     deep: true,
-  //   },
-  // },
+  watch: {
+    distance: {
+      handler(val, oldVal) {
+        this.inputResize();
+        return (val, oldVal);
+      },
+      deep: true,
+    },
+    screenMobileWidth: {
+      handler(val) {
+        this.onResize();
+        return val;
+      },
+    },
+  },
   methods: {
+    checkResize() {
+      this.screenMobileWidth = window.innerWidth > 980;
+    },
     onResize() {
       this.arrow.filtres = (window.innerWidth) > 980;
     },
     inputResize() {
-      this.width.from = this.$el.querySelector('.input_fake_from').clientWidth;
-      this.width.to = this.$el.querySelector('.input_fake_to').clientWidth;
+      setTimeout(() => {
+        this.width.from = this.$el.querySelector('.input_fake_from').clientWidth;
+        this.width.to = this.$el.querySelector('.input_fake_to').clientWidth;
+        console.log(this.width.from);
+      }, 0);
     },
   },
 };
@@ -230,6 +256,9 @@ export default {
       color: #C4C4C4;
     }
   }
+  input {
+    border: none;
+  }
   &_input {
     width: 111px;
     height: 43px;
@@ -238,15 +267,13 @@ export default {
     border-radius: 30px;
     justify-content: center;
     box-sizing:border-box;
-    input {
-      // width: 60%;
-      // box-sizing:border-box;
-    }
     .input_fake_to, .input_fake_from {
       position: absolute;
+      top: -200vh;
+      left: -300vh;
     }
     @media screen and (max-width: 980px) {
-      width: 80px;
+      width: 45%;
     }
   }
 }
@@ -292,7 +319,10 @@ export default {
     position: absolute;
   }
   @media screen and (max-width: 576px) {
-    width: 100vh;
+    left: 0;
+    width: 100%;
+    padding: 0 15px;
+    max-width: 100%;
   }
 }
 .filter_item {
@@ -313,12 +343,18 @@ export default {
     top: 12px;
     right: 18px;
   }
+  &:hover {
+    color: #7141F0;
+    &::after {
+      background-color: #7141F0;
+    }
+  }
 }
 // белая строка фильтра
 .line_white {
   margin: 15px;
+  border-bottom: 1px solid #BFBFBF;
   &_title {
-    border-bottom: 1px solid #BFBFBF;
     padding: 12px 0;
     background-color: #fff;
     cursor: pointer;
@@ -328,6 +364,12 @@ export default {
       top: 16px;
       right: 4px;
     }
+    &:hover {
+    color: #7141F0;
+    &::after {
+      background-color: #7141F0;
+    }
+  }
   }
 }
 // Кнопка для выпаданию фильтров
@@ -393,7 +435,14 @@ export default {
   z-index: -1;
   height: 100%;
   padding-bottom: 10px;
-  max-width: 283px;
+  p {
+    margin-left: 50px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    &:hover {
+      color: #7141F0;
+    }
+  }
 }
 // анимация
 .fade-enter, .fade-leave-to {

@@ -92,6 +92,11 @@ export default {
     width: 105px;
     letter-spacing: 0.02em;
     cursor: pointer;
+    &:hover {
+      color: #fff;
+      background-color:#181818;
+      border: 1px solid #181818;
+    }
     @media screen and (max-width: 576px) {
       font-size: calc(9px + (15 - 9) * ((100vw - 320px) / (576 - 320)));
       width: calc(82px + (105 - 82) * ((100vw - 320px) / (576 - 320)));

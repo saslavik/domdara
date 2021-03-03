@@ -11,7 +11,12 @@
           <img src="../assets/svg/Z.svg" alt=""><img src="../assets/svg/Score.svg" alt="">
         </div>
         <div>
-          <img src="../assets/svg/Action.svg" alt="">
+          <svg width="19" height="17" viewBox="-1 0 19 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.0627 0.25C14.4677 0.25 16.4168 2.125 16.4168 4.75C16.4168 10
+            10.4793 13 8.50016 14.125C6.521 13 0.583496 10 0.583496 4.75C0.583496
+            2.125 2.56266 0.25 4.93766 0.25C6.41016 0.25 7.7085 1 8.50016 1.75C9.29183
+            1 10.5902 0.25 12.0627 0.25Z"/>
+          </svg>
         </div>
       </div>
     </div>
@@ -133,11 +138,20 @@ export default {
       align-items: center;
       vertical-align: middle;
       img {
+        cursor: pointer;
         width: 16px;
         height: 16px;
         @media screen and (max-width: 768px) {
           width: calc(9px + (16 - 9) * ((100vw - 320px) / (768 - 320)));
           height: calc(9px + (16 - 9) * ((100vw - 320px) / (768 - 320)));
+        }
+      }
+      svg {
+        cursor: pointer;
+        stroke: #7141F0;
+        stroke-width: 2px;
+        &:hover {
+          fill: #7141F0;
         }
       }
       &:first-child {

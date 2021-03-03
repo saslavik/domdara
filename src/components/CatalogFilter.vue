@@ -1,16 +1,24 @@
 <template>
   <div class="catalog filter_box">
     <div class="line_grey arrow catalog_top"
-    :class="{arrow_active: arrow.catalog}"
-    @click='arrow.catalog = !arrow.catalog'>Каталог</div>
+    :class="{arrow_active: arrowCatalog}"
+    @click='arrowCatalog = !arrowCatalog'>Каталог</div>
     <div class="catalog_end">
       <transition name="fade">
         <div class="filter_body"
-        v-show="arrow.catalog"
-        :class="{filter_body_active: arrow.catalog}">
-          <div class="catalog_item" v-for="item in catalog" :key="item.title">
-            <img :src="require(`../assets/svg/catalog/${item.img}.svg`)" alt="">
-            <div class="catalog_text">{{ item.title }}</div>
+        v-show="arrowCatalog"
+        :class="{filter_body_active: arrowCatalog}">
+          <div class="catalog_item"
+          v-for="item in catalog" :key="item.title">
+            <div class="catalog_item_top arrow"
+            :class="{catalog_item_top_active: item.childActive}"
+            @click="item.childActive = !item.childActive">
+              <img :src="require(`../assets/svg/catalog/${item.img}.svg`)" alt="">
+              <div class="catalog_text">{{ item.title }}</div>
+            </div>
+            <div class="catalog_item_bottom" v-show="item.childActive">
+              <p class="catalog_child" v-for="child in item.child" :key="child">{{ child }}</p>
+            </div>
           </div>
         </div>
       </transition>
@@ -22,25 +30,58 @@
 export default {
   data() {
     return {
-      arrow: {
-        catalog: false,
-      },
+      arrowCatalog: false,
       catalog: {
         woman: {
           title: 'Женская одежда',
           img: 't-shirt-2-line',
+          childActive: false,
+          child: [
+            'Блузки и рубашки',
+            'Боди',
+            'Брюки',
+            'Верхняя одежда',
+            'Джемперы и кардиганы',
+            'Джинсы',
+            'Женские пижамы',
+            'Жилеты',
+            'Комбинезоны',
+            'Комбинезоны c шортами',
+            'Костюмы',
+            'Купальники и пляжная одежда',
+            'Женское нижнее белье',
+            'Женские носки и чулочные изделия',
+            'Пиджаки',
+            'Платья',
+            'Толстовки и свитшоты',
+            'Футболки и топы',
+            'Шорты',
+            'Юбки',
+          ],
         },
         man: {
           title: 'Мужская одежда',
           img: 'shirt-line',
+          childActive: false,
+          child: [
+            'Брюки', 'Верхняя одежда', 'Джемперы, свитеры и кардиганы', 'Джинсы', 'Домашняя одежда', 'Жилеты', 'Костюмы', 'Мужское нижнее белье', 'Мужские носки', 'Пиджаки', 'Плавки и пляжные шорты', 'Рубашки', 'Спортивные костюмы', 'Толстовки и свитшоты', 'Футболки и поло Шорты',
+          ],
         },
         gsm: {
           title: 'Мобильные телефоны и аксессуары',
           img: 'smartphone-line',
+          childActive: false,
+          child: [
+            'Смартфоны Apple iPhone', 'Мобильные телефоны', 'Восстановленные телефоны', 'Аксессуары для мобильных телефонов', 'Запчасти для мобильных телефонов', 'Внешние аккумуляторы', 'Чехлы для смартфонов', 'Сенсорные панели (тачскрин)', 'Коммуникационное оборудование', 'Рации', 'Запчасти и аксессуары для раций',
+          ],
         },
         baby: {
           title: 'Мать и ребёнок',
           img: 'parent-line',
+          childActive: false,
+          child: [
+            'Одежда для малышек', 'Одежда для малышей', 'Одежда для девочек', 'Одежда для мальчиков', 'Обувь для детей', 'Оборудование и механизмы', 'Смена подгузников', 'Уход за ребенком', 'Детское постельное белье', 'Защитная экипировка', 'Кормление', 'Сочетающаяся одежда для семьи', 'Обувь для малышей', 'Приучение к туалету', 'Беременность и материнство', 'Детские сувениры', 'Мебель для малышей', 'Детское питание', 'Аксессуары', 'Детская коляска', 'Сиденья и аксессуары для авто',
+          ],
         },
         auto: {
           title: 'Автомобили и мотоциклы',
@@ -145,6 +186,19 @@ export default {
       },
     };
   },
+  watch: {
+    arrowCatalog: {
+      handler(val) {
+        if (val === false) this.closeUp();
+      },
+    },
+  },
+  methods: {
+    closeUp() {
+      const arr = Object.keys(this.catalog);
+      arr.forEach((el) => { this.catalog[el].childActive = false; });
+    },
+  },
 };
 </script>
 
@@ -179,11 +233,20 @@ export default {
   @media screen and (max-width: 576px) {
     margin-bottom: 0;
   }
+  &:hover {
+    color: #7141F0;
+    &::after {
+      background-color: #7141F0;
+    }
+  }
 }
 .filter_body {
   padding: 0 15px;
   max-width: 283px;
   transition: 0.3s linear;
+  @media screen and (max-width: 576px) {
+    max-width: 100%;
+  }
 }
 .filter_body_active {
     overflow: hidden;
@@ -192,14 +255,45 @@ export default {
     height: 100%;
 }
 .catalog {
-  position: relative;
+  // position: relative;
   font-size: 15px;
 }
 .catalog_item {
   display: flex;
+  flex-direction: column;
   text-align: center;
   min-height: 28px;
-
+  transition: 0.3s linear;
+  &_top {
+    display: flex;
+    &::after {
+      transition: 0.3s linear;
+      right: 3px;
+      margin-top: -8px;
+      top: 50%;
+    }
+    &:hover {
+      transition: 0.3s linear;
+      color: #7141F0;
+      &::after {
+        background-color: #7141F0;
+      }
+    }
+    &_active::after {
+      transition: 0.3s linear;
+      transform: rotate(90deg);
+    }
+  }
+  &_bottom {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    p {
+      text-align: left;
+      margin-top: 8px;
+      margin-left: 50px;
+    }
+  }
   img {
     width: 18px;
     height: 18px;
@@ -210,6 +304,15 @@ export default {
     text-align: left;
     display: flex;
     margin: auto 0;
+    flex-direction: column;
+    cursor: pointer;
+
+  }
+  .catalog_child {
+    &:hover {
+      color: #7141F0;
+      cursor: pointer;
+    }
   }
 }
 .catalog_end {
@@ -217,6 +320,10 @@ export default {
   position: absolute;
   z-index: 3;
   background-color: #fff;
+  @media screen and (max-width: 576px) {
+    left: 0;
+    width: 100%;
+  }
 }
 .catalog_top {
   @media screen and (max-width: 980px) {

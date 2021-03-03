@@ -30,5 +30,10 @@ export default {
       height: calc(38px + (60 - 38) * ((100vw - 320px) / (768 - 320)));
       margin: calc(40px + (75 - 40) * ((100vw - 320px) / (768 - 320))) auto;
     }
+    &:hover {
+      color: #fff;
+      background-color: rgba(24, 24, 24, 1);
+      border: 2px solid rgba(24, 24, 24, 1);
+    }
   }
 </style>

@@ -49,7 +49,6 @@ export default {
 
 .filter_box {
   width: 283px;
-  position: relative;
   @media screen and (max-width: 980px) {
     width: 30%;
   }

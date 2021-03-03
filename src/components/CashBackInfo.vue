@@ -5,25 +5,34 @@
       <div class="cashBackInfo_title">Получайте мгновенный кэшбэк и используйте его
         для новых покупок товаров и услуг до 100%!</div>
       <div class="cashBackInfo_descr">
-        <p>Благодаря нашему сервису, вы получаете кэшбэк у наших партнёров, который
+        <div class="descr_aid">
+          <p>Благодаря нашему сервису, вы получаете кэшбэк у наших партнёров, который
           увеличивается на вашем кошельке каждую секунду!</p>
-        <p>Кэшбэк накопленный в EXO монетах автоматически увеличивается на 8,4% в месяц.</p>
-        <h6>Как покупать с кэшбэком?</h6>
-        <p>1. Вы регистрируетесь у нас на нашем сайте domdara.com<br>
-          2. Выбираете магазин на нашей платформе дарамаркет<br>
-          3. Совершаете покупки - предъявляете карту - получаете кэшбэк
-        </p>
-        <h6>Кэшбэк, который:</h6>
-        <ul>
-          <li>•  начисляется мгновенно</li>
-          <li>•  не сгорает</li>
-          <li>•  переводится на банковскую карту</li>
-          <li>•  переводится любому пользователю</li>
-          <li>•  увеличивается на счету</li>
-        </ul>
+          <p>Кэшбэк накопленный в EXO монетах автоматически увеличивается на 8,4% в месяц.</p>
+          <h6>Как покупать с кэшбэком?</h6>
+        </div>
+        <div class="descr_minimise"
+        :style="{height: minimiseHeight + 'px'}">
+          <div class="minimise_content">
+            <p>1. Вы регистрируетесь у нас на нашем сайте domdara.com<br>
+              2. Выбираете магазин на нашей платформе дарамаркет<br>
+              3. Совершаете покупки - предъявляете карту - получаете кэшбэк
+            </p>
+            <h6>Кэшбэк, который:</h6>
+            <ul>
+              <li>•  начисляется мгновенно</li>
+              <li>•  не сгорает</li>
+              <li>•  переводится на банковскую карту</li>
+              <li>•  переводится любому пользователю</li>
+              <li>•  увеличивается на счету</li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div class="minimise">
-        <div class="minimise_btn">
+        <div class="minimise_btn"
+        :class="{minimise_btn_active: !minimise}"
+        @click="minimiseShow">
           Свернуть
         </div>
       </div>
@@ -36,9 +45,27 @@
 
 <script>
 export default {
+  data() {
+    return {
+      minimise: false,
+      minimiseHeight: null,
+    };
+  },
+  mounted() {
+    window.addEventListener('resize', this.minimHeight);
+    this.minimHeight();
+  },
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);
+    },
+    minimiseShow() {
+      this.minimise = !this.minimise;
+      this.minimHeight();
+    },
+    minimHeight() {
+      if (this.minimise) this.minimiseHeight = this.$el.querySelector('.minimise_content').clientHeight;
+      else this.minimiseHeight = 0;
     },
   },
 };
@@ -97,6 +124,18 @@ export default {
     }
   }
 }
+.descr_minimise {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s linear;
+  &_active {
+    height: 100%;
+  }
+}
+.minimise_content {
+  // position: absolute;
+  bottom: 0;
+}
 // кнопка свернуть
 .minimise {
   color: #fff;
@@ -126,8 +165,14 @@ export default {
       width: 21px;
       height: 21px;
       margin-left: 16px;
+      margin-top: -9px;
       transform: rotate(-90deg);
-      top: 26%;
+      top: 50%;
+      transition: all 0.3s linear;
+    }
+    &_active::after {
+      margin-top: -15px;
+      transform: rotate(90deg);
     }
   }
 }
