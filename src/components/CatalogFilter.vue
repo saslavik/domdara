@@ -1,15 +1,15 @@
 <template>
   <div class="catalog filter_box">
     <div class="line_grey arrow catalog_top"
-    :class="{arrow_active: arrowCatalog}"
-    @click='arrowCatalog = !arrowCatalog'>Каталог</div>
+    :class="{arrow_active: catalogShow}"
+    @click="$emit('catalog')">Каталог</div>
     <div class="catalog_bottom"
-    :class="{catalog_bottom_active: arrowCatalog}">
+    :class="{catalog_bottom_active: catalogShow}">
         <div class="filter_body"
-        v-show="arrowCatalog"
-        :class="{filter_body_active: arrowCatalog}">
+        v-show="catalogShow"
+        :class="{filter_body_active: catalogShow}">
           <div class="catalog_item"
-          v-for="item in catalog" :key="item.title">
+          v-for="item in catalogList" :key="item.title">
             <div class="catalog_item_top arrow"
             :class="{catalog_item_top_active: item.childActive}"
             @click="item.childActive = !item.childActive">
@@ -28,10 +28,11 @@
 
 <script>
 export default {
+  props: ['catalog'],
   data() {
     return {
       arrowCatalog: false,
-      catalog: {
+      catalogList: {
         woman: {
           title: 'Женская одежда',
           img: 't-shirt-2-line',
@@ -193,6 +194,11 @@ export default {
       },
     },
   },
+  computed: {
+    catalogShow() {
+      return this.catalog;
+    },
+  },
   methods: {
     closeUp() {
       const arr = Object.keys(this.catalog);
@@ -279,23 +285,23 @@ export default {
         background-color: #7141F0;
       }
     }
-    &_active::after {
-      transition: 0.3s linear;
-      transform: rotate(90deg);
+    &_active {
+      color: #7141F0;
+      &::after {
+        background-color: #7141F0;
+        transition: 0.3s linear;
+        transform: rotate(90deg);
+      }
     }
+
   }
   &_bottom {
     display: flex;
     overflow: hidden;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     max-height: 0;
     transition: all 0.3s linear;
-    p {
-      text-align: left;
-      margin-top: 8px;
-      margin-left: 50px;
-    }
     &_active {
       max-height: 10000px;
     }
@@ -315,9 +321,26 @@ export default {
 
   }
   .catalog_child {
+    text-align: left;
+    margin-top: 12px;
+    margin-left: 50px;
     &:hover {
       color: #7141F0;
       cursor: pointer;
+    }
+    &_active {
+      color: #7141F0;
+      position: relative;
+      &::before {
+        content: '';
+        background-color: #7141F0;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        position: absolute;
+        left: -18px;
+        top: calc(50% - 3px);
+      }
     }
   }
 }

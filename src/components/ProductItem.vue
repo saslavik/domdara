@@ -138,7 +138,6 @@ export default {
       align-items: center;
       vertical-align: middle;
       img {
-        cursor: pointer;
         width: 16px;
         height: 16px;
         @media screen and (max-width: 768px) {

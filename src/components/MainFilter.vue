@@ -2,14 +2,14 @@
   <div class="filter_content filter_box">
     <!-- кнопка выпадающего меню фильтры -->
     <div class="filter_item filter_top category arrow"
-    :class="{filter_top_active: arrow.filtres}"
-    @click="arrow.filtres = !arrow.filtres">Фильтры</div>
+    :class="{filter_top_active: filterShow}"
+    @click="$emit('filter')">Фильтры</div>
     <!-- список фильтров -->
     <div class="filter_bottom"
-    :class="{filter_bottom_active: arrow.filtres}">
+    :class="{filter_bottom_active: filterShow}">
         <div class="filter_body"
-        v-show="arrow.filtres"
-        :class="{filter_body_active: arrow.filtres}">
+        v-show="filterShow"
+        :class="{filter_body_active: filterShow}">
           <div class="sort filter_item">
             <div class="line_grey arrow"
             :class="{arrow_active: arrow.sort}"
@@ -17,14 +17,8 @@
             <div class="item_end"
             :class="{item_end_active: arrow.sort}">
                 <div class="filter_body">
-                <p>По умолчанию</p>
-                <p>Новые</p>
-                <p>Популярность</p>
-                <p>Алфавит</p>
-                <p>Рейтинг</p>
-                <p>По возрастанию кэшбэка</p>
-                <p>С доставкой</p>
-                <p>По убыванию кэшбэка</p>
+                  <p class="fitler_child fitler_child_active">По умолчанию</p>
+                  <p class="fitler_child" v-for="item in filterList.sort" :key="item">{{item}}</p>
                 </div>
             </div>
           </div >
@@ -36,10 +30,8 @@
             <div class="item_end"
             :class="{item_end_active: arrow.payments}">
               <div class="filter_body">
-              <p>Все</p>
-              <p>EXO</p>
-              <p>Картой ДОМДАРА</p>
-              <p>Наличными или картой</p>
+                <p class="fitler_child fitler_child_active">Все</p>
+                <p class="fitler_child" v-for="item in filterList.payments" :key="item">{{item}}</p>
               </div>
             </div>
           </div>
@@ -52,9 +44,9 @@
                 <div class="filter_body"
                 v-show="arrow.countries">
                 <finder />
-                <p>Беларусь</p>
-                <p>Россия</p>
-                <p>Украина</p>
+                <p class="fitler_child fitler_child_active">Беларусь</p>
+                <p class="fitler_child">Россия</p>
+                <p class="fitler_child">Украина</p>
                 </div>
             </div>
           </div>
@@ -66,6 +58,7 @@
             :class="{item_end_active: arrow.cities}">
                 <div class="filter_body">
                 <finder />
+                <p class="fitler_child">Тагил</p>
                 </div>
             </div>
           </div>
@@ -77,7 +70,8 @@
             :class="{item_end_active: arrow.area}">
                 <div class="filter_body"
                 v-show="arrow.area">
-                test <br>test <br>test <br>test <br></div>
+                <p class="fitler_child">13 Район</p>
+                </div>
             </div>
           </div>
           <div class="distance filter_item">
@@ -122,6 +116,7 @@ import VueSlider from 'vue-slider-component';
 import Finder from '@/components/UI/Finder.vue';
 
 export default {
+  props: ['filter'],
   components: {
     VueSlider,
     Finder,
@@ -130,7 +125,23 @@ export default {
     return {
       // Радиус поиска
       distance: [1000, 25000],
-      calc: 30,
+      filterList: {
+        sort: [
+          'Новые',
+          'Популярность',
+          'Алфавит',
+          'Рейтинг',
+          'По возрастанию кэшбэка',
+          'С доставкой',
+          'По убыванию кэшбэка',
+        ],
+        payments: [
+          'EXO',
+          'Картой ДОМДАРА',
+          'Наличными или картой',
+        ],
+      },
+
       // Чекбоксы
       advanced: {
         rating: {
@@ -159,7 +170,6 @@ export default {
         },
       },
       arrow: {
-        filtres: false,
         sort: false,
         payments: false,
         countries: false,
@@ -170,12 +180,13 @@ export default {
         from: 35,
         to: 44,
       },
-      screenMobileWidth: null,
     };
   },
-  mounted() {
-    this.screenMobileWidth = window.innerWidth > 980;
-    window.addEventListener('resize', this.checkResize);
+
+  computed: {
+    filterShow() {
+      return this.filter;
+    },
   },
   watch: {
     distance: {
@@ -185,20 +196,8 @@ export default {
       },
       deep: true,
     },
-    screenMobileWidth: {
-      handler(val) {
-        this.onResize();
-        return val;
-      },
-    },
   },
   methods: {
-    checkResize() {
-      this.screenMobileWidth = window.innerWidth > 980;
-    },
-    onResize() {
-      this.arrow.filtres = (window.innerWidth) > 980;
-    },
     inputResize() {
       setTimeout(() => {
         this.width.from = this.$el.querySelector('.input_fake_from').clientWidth;
@@ -421,12 +420,26 @@ export default {
 }
 // выпадающее меню каждой категории фильтров
 .filter_body {
-  p {
+  .fitler_child {
     margin-left: 50px;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     cursor: pointer;
     &:hover {
       color: #7141F0;
+    }
+    &_active {
+      color: #7141F0;
+      position: relative;
+      &::before {
+        content: '';
+        background-color: #7141F0;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        position: absolute;
+        left: -18px;
+        top: calc(50% - 3px);
+      }
     }
   }
 }

@@ -33,7 +33,8 @@
         <div class="minimise_btn"
         :class="{minimise_btn_active: !minimise}"
         @click="minimise = !minimise">
-          Свернуть
+          <span v-if="minimise">Свернуть</span>
+          <span v-if="!minimise">Смотреть далее</span>
         </div>
       </div>
     </div>
@@ -136,6 +137,7 @@ export default {
     margin-top: calc(32px + (0 - 32) * ((100vw - 320px) / (768 - 320)));
   }
   &_btn {
+    transition: 0.3s;
     cursor: pointer;
     padding: 6px 12px;
     position: relative;

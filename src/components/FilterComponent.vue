@@ -9,8 +9,8 @@
         <div class="cart_img"></div>
       </div>
     </div>
-    <main-filter/>
-    <catalog-filter />
+    <main-filter :filter="filter" @filter="filterShow()"/>
+    <catalog-filter :catalog="catalog" @catalog="catalogShow()"/>
   </div>
 </template>
 
@@ -24,6 +24,41 @@ export default {
     Finder,
     MainFilter,
     CatalogFilter,
+  },
+  data() {
+    return {
+      filter: false,
+      catalog: false,
+      screenMobileWidth: null,
+    };
+  },
+  mounted() {
+    this.screenMobileWidth = window.innerWidth > 980;
+    window.addEventListener('resize', this.checkResize);
+  },
+  watch: {
+    screenMobileWidth: {
+      handler(val) {
+        this.onResize();
+        return val;
+      },
+    },
+  },
+  methods: {
+    filterShow() {
+      this.filter = !this.filter;
+      this.catalog = false;
+    },
+    catalogShow() {
+      this.catalog = !this.catalog;
+      if (window.innerWidth <= 980) this.filter = false;
+    },
+    checkResize() {
+      this.screenMobileWidth = window.innerWidth > 980;
+    },
+    onResize() {
+      this.filter = (window.innerWidth) > 980;
+    },
   },
 };
 </script>
