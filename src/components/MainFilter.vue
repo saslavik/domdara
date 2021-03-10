@@ -17,8 +17,13 @@
             <div class="item_end"
             :class="{item_end_active: arrow.sort}">
                 <div class="filter_body">
-                  <p class="fitler_child fitler_child_active">По умолчанию</p>
-                  <p class="fitler_child" v-for="item in filterList.sort" :key="item">{{item}}</p>
+                  <div class="fitler_child" v-for="item in filterList.sort" :key="item.value"
+                  @click="filterList.sortValue = item.value"
+                  :class="{'fitler_child_active': item.value === filterList.sortValue}">
+                    <input :id='item.value' type="radio" name="sort" :value="item.value" hidden
+                    class="fitler_child fitler_child_active" v-model="filterList.sortValue">
+                    <label :for="item.value">{{item.name}}</label>
+                  </div>
                 </div>
             </div>
           </div >
@@ -30,8 +35,13 @@
             <div class="item_end"
             :class="{item_end_active: arrow.payments}">
               <div class="filter_body">
-                <p class="fitler_child fitler_child_active">Все</p>
-                <p class="fitler_child" v-for="item in filterList.payments" :key="item">{{item}}</p>
+                <div class="fitler_child" v-for="item in filterList.payments" :key="item.value"
+                @click="filterList.paymentsValue = item.value"
+                :class="{'fitler_child_active': item.value === filterList.paymentsValue}">
+                  <input :id='item.value' type="radio" name="payments" :value="item.value" hidden
+                  class="fitler_child fitler_child_active" v-model="filterList.paymentsValue">
+                  <label :for="item.value">{{item.name}}</label>
+                </div>
               </div>
             </div>
           </div>
@@ -127,19 +137,59 @@ export default {
       distance: [1000, 25000],
       filterList: {
         sort: [
-          'Новые',
-          'Популярность',
-          'Алфавит',
-          'Рейтинг',
-          'По возрастанию кэшбэка',
-          'С доставкой',
-          'По убыванию кэшбэка',
+          {
+            name: 'По умолчанию',
+            value: 'default',
+          },
+          {
+            name: 'Новые',
+            value: 'new',
+          },
+          {
+            name: 'Популярность',
+            value: 'popular',
+          },
+          {
+            name: 'Алфавит',
+            value: 'abc',
+          },
+          {
+            name: 'Рейтинг',
+            value: 'rating',
+          },
+          {
+            name: 'По возрастанию кэшбэка',
+            value: 'minToMax',
+          },
+          {
+            name: 'С доставкой',
+            value: 'delivery',
+          },
+          {
+            name: 'По убыванию кэшбэка',
+            value: 'maxToMin',
+          },
         ],
+        sortValue: 'default',
         payments: [
-          'EXO',
-          'Картой ДОМДАРА',
-          'Наличными или картой',
+          {
+            name: 'Все',
+            value: 'all',
+          },
+          {
+            name: 'EXO',
+            value: 'eho',
+          },
+          {
+            name: 'Картой ДОМДАРА',
+            value: 'domdara',
+          },
+          {
+            name: 'Наличными или картой',
+            value: 'cash',
+          },
         ],
+        paymentsValue: 'all',
       },
 
       // Чекбоксы
@@ -426,6 +476,9 @@ export default {
     cursor: pointer;
     &:hover {
       color: #7141F0;
+    }
+    label {
+      cursor: pointer;
     }
     &_active {
       color: #7141F0;
