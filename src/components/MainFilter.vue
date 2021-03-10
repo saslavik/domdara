@@ -18,10 +18,10 @@
             :class="{item_end_active: arrow.sort}">
                 <div class="filter_body">
                   <div class="fitler_child" v-for="item in filterList.sort" :key="item.value"
-                  @click="filterList.sortValue = item.value"
+                  @click="filterList.sortValue = item.value; closeMobile(); closeMobile()"
                   :class="{'fitler_child_active': item.value === filterList.sortValue}">
-                    <input :id='item.value' type="radio" name="sort" :value="item.value" hidden
-                    class="fitler_child fitler_child_active" v-model="filterList.sortValue">
+                    <input :id='item.value' type="radio" name="sort" :value="item.value" @click.stop
+                    class="fitler_child fitler_child_active" v-model="filterList.sortValue" hidden>
                     <label :for="item.value">{{item.name}}</label>
                   </div>
                 </div>
@@ -36,10 +36,11 @@
             :class="{item_end_active: arrow.payments}">
               <div class="filter_body">
                 <div class="fitler_child" v-for="item in filterList.payments" :key="item.value"
-                @click="filterList.paymentsValue = item.value"
+                @click="filterList.paymentsValue = item.value; closeMobile()"
                 :class="{'fitler_child_active': item.value === filterList.paymentsValue}">
-                  <input :id='item.value' type="radio" name="payments" :value="item.value" hidden
-                  class="fitler_child fitler_child_active" v-model="filterList.paymentsValue">
+                  <input :id='item.value' type="radio" name="payments" :value="item.value"
+                  @click.stop class="fitler_child fitler_child_active"
+                  v-model="filterList.paymentsValue" hidden>
                   <label :for="item.value">{{item.name}}</label>
                 </div>
               </div>
@@ -54,9 +55,14 @@
                 <div class="filter_body"
                 v-show="arrow.countries">
                 <finder />
-                <p class="fitler_child fitler_child_active">Беларусь</p>
-                <p class="fitler_child">Россия</p>
-                <p class="fitler_child">Украина</p>
+                <div class="fitler_child" v-for="item in filterList.countries" :key="item.value"
+                @click="filterList.countriesValue = item.value; closeMobile()"
+                :class="{'fitler_child_active': item.value === filterList.countriesValue}">
+                  <input :id='item.value' type="radio" name="countries" :value="item.value"
+                  @click.stop class="fitler_child fitler_child_active"
+                  v-model="filterList.countriesValue" hidden>
+                  <label :for="item.value">{{item.name}}</label>
+                </div>
                 </div>
             </div>
           </div>
@@ -66,10 +72,17 @@
             @click='arrow.cities = !arrow.cities'>Город</div>
             <div class="item_end"
             :class="{item_end_active: arrow.cities}">
-                <div class="filter_body">
+              <div class="filter_body">
                 <finder />
-                <p class="fitler_child">Тагил</p>
+                <div class="fitler_child" v-for="item in filterList.cities" :key="item.value"
+                @click="filterList.citiesValue = item.value; closeMobile()"
+                :class="{'fitler_child_active': item.value === filterList.citiesValue}">
+                  <input :id='item.value' type="radio" name="cities" :value="item.value" @click.stop
+                  class="fitler_child fitler_child_active" v-model="filterList.citiesValue" hidden>
+                  <label :for="item.value">{{item.name}}</label>
                 </div>
+                <p class="fitler_child">Тагил</p>
+              </div>
             </div>
           </div>
           <div class="area line_white filter_item">
@@ -78,10 +91,15 @@
             @click='arrow.area = !arrow.area'>Район</div>
             <div class="item_end"
             :class="{item_end_active: arrow.area}">
-                <div class="filter_body"
-                v-show="arrow.area">
-                <p class="fitler_child">13 Район</p>
+              <div class="filter_body">
+                <div class="fitler_child" v-for="item in filterList.area" :key="item.value"
+                @click="filterList.areaValue = item.value; closeMobile()"
+                :class="{'fitler_child_active': item.value === filterList.areaValue}">
+                  <input :id='item.value' type="radio" name="area" :value="item.value" @click.stop
+                  class="fitler_child fitler_child_active" v-model="filterList.areaValue" hidden>
+                  <label :for="item.value">{{item.name}}</label>
                 </div>
+              </div>
             </div>
           </div>
           <div class="distance filter_item">
@@ -190,6 +208,51 @@ export default {
           },
         ],
         paymentsValue: 'all',
+        countries: [
+          {
+            name: 'Беларусь',
+            value: 'bel',
+          },
+          {
+            name: 'Россия',
+            value: 'rus',
+          },
+          {
+            name: 'Украина',
+            value: 'ukr',
+          },
+        ],
+        countriesValue: 'rus',
+        cities: [
+          {
+            name: 'Москва',
+            value: 'moscow',
+          },
+          {
+            name: 'Ростов на дону',
+            value: 'rostov',
+          },
+          {
+            name: 'Тагил',
+            value: 'tagil',
+          },
+          {
+            name: 'Уфа',
+            value: 'ufa',
+          },
+        ],
+        citiesValue: null,
+        area: [
+          {
+            name: '13 район',
+            value: '13',
+          },
+          {
+            name: '25 район',
+            value: '25',
+          },
+        ],
+        areaValue: null,
       },
 
       // Чекбоксы
@@ -252,8 +315,13 @@ export default {
       setTimeout(() => {
         this.width.from = this.$el.querySelector('.input_fake_from').clientWidth;
         this.width.to = this.$el.querySelector('.input_fake_to').clientWidth;
-        console.log(this.width.from);
       }, 0);
+    },
+    closeMobile() {
+      if (window.innerWidth <= 980) {
+        window.scrollTo(0, 0);
+        this.$emit('filter');
+      }
     },
   },
 };
