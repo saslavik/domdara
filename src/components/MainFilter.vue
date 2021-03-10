@@ -18,7 +18,7 @@
             :class="{item_end_active: arrow.sort}">
                 <div class="filter_body">
                   <div class="fitler_child" v-for="item in filterList.sort" :key="item.value"
-                  @click="filterList.sortValue = item.value; closeMobile(); closeMobile()"
+                  @click="filterList.sortValue = item.value; closeMobile()"
                   :class="{'fitler_child_active': item.value === filterList.sortValue}">
                     <input :id='item.value' type="radio" name="sort" :value="item.value" @click.stop
                     class="fitler_child fitler_child_active" v-model="filterList.sortValue" hidden>
