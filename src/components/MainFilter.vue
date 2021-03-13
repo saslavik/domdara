@@ -7,134 +7,140 @@
     <!-- список фильтров -->
     <div class="filter_bottom"
     :class="{filter_bottom_active: filterShow}">
-        <div class="filter_body"
-        v-show="filterShow"
-        :class="{filter_body_active: filterShow}">
-          <div class="sort filter_item">
-            <div class="line_grey arrow"
-            :class="{arrow_active: arrow.sort}"
-            @click='arrow.sort = !arrow.sort'>Сортировка</div>
-            <div class="item_end"
-            :class="{item_end_active: arrow.sort}">
-                <div class="filter_body">
-                  <div class="fitler_child" v-for="item in filterList.sort" :key="item.value"
-                  @click="filterList.sortValue = item.value; closeMobile()"
-                  :class="{'fitler_child_active': item.value === filterList.sortValue}">
-                    <input :id='item.value' type="radio" name="sort" :value="item.value" @click.stop
-                    class="fitler_child fitler_child_active" v-model="filterList.sortValue" hidden>
-                    <label :for="item.value">{{item.name}}</label>
-                  </div>
-                </div>
-            </div>
-          </div >
-          <div class="payments filter_item">
-            <div class="line_grey arrow"
-            :class="{arrow_active: arrow.payments}"
-            @click='arrow.payments = !arrow.payments'
-            >Варианты оплаты</div>
-            <div class="item_end"
-            :class="{item_end_active: arrow.payments}">
+      <div class="bottom_title">
+        фильтры <span @click="$emit('filter')">✕</span></div>
+      <div class="filter_body"
+      v-show="filterShow"
+      :class="{filter_body_active: filterShow}">
+        <div class="sort filter_item">
+          <div class="line_grey arrow"
+          :class="{arrow_active: arrow.sort}"
+          @click='arrow.sort = !arrow.sort'>Сортировка</div>
+          <div class="item_end"
+          :class="{item_end_active: arrow.sort}">
               <div class="filter_body">
-                <div class="fitler_child" v-for="item in filterList.payments" :key="item.value"
-                @click="filterList.paymentsValue = item.value; closeMobile()"
-                :class="{'fitler_child_active': item.value === filterList.paymentsValue}">
-                  <input :id='item.value' type="radio" name="payments" :value="item.value"
-                  @click.stop class="fitler_child fitler_child_active"
-                  v-model="filterList.paymentsValue" hidden>
+                <div class="fitler_child" v-for="item in filterList.sort" :key="item.value"
+                @click="filterList.sortValue = item.value"
+                :class="{'fitler_child_active': item.value === filterList.sortValue}">
+                  <input :id='item.value' type="radio" name="sort" :value="item.value" @click.stop
+                  class="fitler_child fitler_child_active" v-model="filterList.sortValue" hidden>
                   <label :for="item.value">{{item.name}}</label>
                 </div>
               </div>
-            </div>
           </div>
-          <div class="countries line_white filter_item">
-            <div class="line_white_title arrow"
-            :class="{arrow_active: arrow.countries}"
-            @click='arrow.countries = !arrow.countries'>Страна</div>
-              <div class="item_end"
-              :class="{item_end_active: arrow.countries}">
-                <div class="filter_body"
-                v-show="arrow.countries">
-                <finder />
-                <div class="fitler_child" v-for="item in filterList.countries" :key="item.value"
-                @click="filterList.countriesValue = item.value; closeMobile()"
-                :class="{'fitler_child_active': item.value === filterList.countriesValue}">
-                  <input :id='item.value' type="radio" name="countries" :value="item.value"
-                  @click.stop class="fitler_child fitler_child_active"
-                  v-model="filterList.countriesValue" hidden>
-                  <label :for="item.value">{{item.name}}</label>
-                </div>
-                </div>
-            </div>
-          </div>
-          <div class="cities line_white filter_item">
-            <div class="line_white_title arrow"
-            :class="{arrow_active: arrow.cities}"
-            @click='arrow.cities = !arrow.cities'>Город</div>
-            <div class="item_end"
-            :class="{item_end_active: arrow.cities}">
-              <div class="filter_body">
-                <finder />
-                <div class="fitler_child" v-for="item in filterList.cities" :key="item.value"
-                @click="filterList.citiesValue = item.value; closeMobile()"
-                :class="{'fitler_child_active': item.value === filterList.citiesValue}">
-                  <input :id='item.value' type="radio" name="cities" :value="item.value" @click.stop
-                  class="fitler_child fitler_child_active" v-model="filterList.citiesValue" hidden>
-                  <label :for="item.value">{{item.name}}</label>
-                </div>
-                <p class="fitler_child">Тагил</p>
+        </div >
+        <div class="payments filter_item">
+          <div class="line_grey arrow"
+          :class="{arrow_active: arrow.payments}"
+          @click='arrow.payments = !arrow.payments'
+          >Варианты оплаты</div>
+          <div class="item_end"
+          :class="{item_end_active: arrow.payments}">
+            <div class="filter_body">
+              <div class="fitler_child" v-for="item in filterList.payments" :key="item.value"
+              @click="filterList.paymentsValue = item.value"
+              :class="{'fitler_child_active': item.value === filterList.paymentsValue}">
+                <input :id='item.value' type="radio" name="payments" :value="item.value"
+                @click.stop class="fitler_child fitler_child_active"
+                v-model="filterList.paymentsValue" hidden>
+                <label :for="item.value">{{item.name}}</label>
               </div>
             </div>
-          </div>
-          <div class="area line_white filter_item">
-            <div class="line_white_title arrow"
-            :class="{arrow_active: arrow.area}"
-            @click='arrow.area = !arrow.area'>Район</div>
-            <div class="item_end"
-            :class="{item_end_active: arrow.area}">
-              <div class="filter_body">
-                <div class="fitler_child" v-for="item in filterList.area" :key="item.value"
-                @click="filterList.areaValue = item.value; closeMobile()"
-                :class="{'fitler_child_active': item.value === filterList.areaValue}">
-                  <input :id='item.value' type="radio" name="area" :value="item.value" @click.stop
-                  class="fitler_child fitler_child_active" v-model="filterList.areaValue" hidden>
-                  <label :for="item.value">{{item.name}}</label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="distance filter_item">
-            Радиус поиска
-            <div class="distance_row">
-              <div class="distance_input">
-                <input type="text"
-                v-model="distance[0]"
-                v-bind:style="{width: width.from + 5 + 'px'}">
-                <div class="input_fake_from">{{ distance[0] }}</div>м
-              </div>
-              <span>—</span>
-              <div class="distance_input">
-                <input type="text"
-                v-model="distance[1]"
-                v-bind:style="{width: width.to + 5 + 'px'}">
-                <div class="input_fake_to">{{ distance[1] }}</div>м
-              </div>
-            </div>
-            <vue-slider
-            v-model="distance"
-            :min='1000'
-            :max='25000'
-            :min-range='1000'
-            :process-dragable="true"
-            :tooltip="'none'">
-            </vue-slider>
-          </div>
-          <div class="advanced filter_item">
-            <div v-for="item in advanced" :key="item.title"
-            class="checkbox"
-            :class="{advanced_active: item.value}"
-            @click="item.value = !item.value">{{ item.title }}</div>
           </div>
         </div>
+        <div class="countries line_white filter_item">
+          <div class="line_white_title arrow"
+          :class="{arrow_active: arrow.countries}"
+          @click='arrow.countries = !arrow.countries'>Страна</div>
+            <div class="item_end"
+            :class="{item_end_active: arrow.countries}">
+              <div class="filter_body"
+              v-show="arrow.countries">
+              <finder />
+              <div class="fitler_child" v-for="item in filterList.countries" :key="item.value"
+              @click="filterList.countriesValue = item.value"
+              :class="{'fitler_child_active': item.value === filterList.countriesValue}">
+                <input :id='item.value' type="radio" name="countries" :value="item.value"
+                @click.stop class="fitler_child fitler_child_active"
+                v-model="filterList.countriesValue" hidden>
+                <label :for="item.value">{{item.name}}</label>
+              </div>
+              </div>
+          </div>
+        </div>
+        <div class="cities line_white filter_item">
+          <div class="line_white_title arrow"
+          :class="{arrow_active: arrow.cities}"
+          @click='arrow.cities = !arrow.cities'>Город</div>
+          <div class="item_end"
+          :class="{item_end_active: arrow.cities}">
+            <div class="filter_body">
+              <finder />
+              <div class="fitler_child" v-for="item in filterList.cities" :key="item.value"
+              @click="filterList.citiesValue = item.value"
+              :class="{'fitler_child_active': item.value === filterList.citiesValue}">
+                <input :id='item.value' type="radio" name="cities" :value="item.value" @click.stop
+                class="fitler_child fitler_child_active" v-model="filterList.citiesValue" hidden>
+                <label :for="item.value">{{item.name}}</label>
+              </div>
+              <p class="fitler_child">Тагил</p>
+            </div>
+          </div>
+        </div>
+        <div class="area line_white filter_item">
+          <div class="line_white_title arrow"
+          :class="{arrow_active: arrow.area}"
+          @click='arrow.area = !arrow.area'>Район</div>
+          <div class="item_end"
+          :class="{item_end_active: arrow.area}">
+            <div class="filter_body">
+              <div class="fitler_child" v-for="item in filterList.area" :key="item.value"
+              @click="filterList.areaValue = item.value"
+              :class="{'fitler_child_active': item.value === filterList.areaValue}">
+                <input :id='item.value' type="radio" name="area" :value="item.value" @click.stop
+                class="fitler_child fitler_child_active" v-model="filterList.areaValue" hidden>
+                <label :for="item.value">{{item.name}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="distance filter_item">
+          Радиус поиска
+          <div class="distance_row">
+            <div class="distance_input">
+              <input type="text"
+              v-model="distance[0]"
+              v-bind:style="{width: width.from + 5 + 'px'}">
+              <div class="input_fake_from">{{ distance[0] }}</div>м
+            </div>
+            <span>—</span>
+            <div class="distance_input">
+              <input type="text"
+              v-model="distance[1]"
+              v-bind:style="{width: width.to + 5 + 'px'}">
+              <div class="input_fake_to">{{ distance[1] }}</div>м
+            </div>
+          </div>
+          <vue-slider
+          v-model="distance"
+          :min='1000'
+          :max='25000'
+          :min-range='1000'
+          :process-dragable="true"
+          :tooltip="'none'">
+          </vue-slider>
+        </div>
+        <div class="advanced filter_item">
+          <div v-for="item in advanced" :key="item.title"
+          class="checkbox"
+          :class="{advanced_active: item.value}"
+          @click="item.value = !item.value">{{ item.title }}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="cancel">Сбросить</div>
+        <div class="apply">Применить</div>
+      </div>
     </div>
   </div>
 </template>
@@ -349,6 +355,22 @@ export default {
     max-height: 1000px;
   }
 }
+.bottom_title {
+  display: none;
+  @media screen and (max-width: 576px) {
+    display: flex;
+    margin: 15px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    text-transform: uppercase;
+  }
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px;
+}
 // радиус поиска
 .distance {
   padding: 15px;
@@ -423,18 +445,28 @@ export default {
   overflow: hidden;
   max-height: 0;
   transition: all 0.3s ease;
+  &_active {
+    max-height: 10000px;
+  }
   @media screen and (max-width: 980px) {
     position: absolute;
   }
   @media screen and (max-width: 576px) {
-    left: 0;
+    position: fixed;
+    top: 0;
+    left: -100%;
     width: 100%;
+    height: 100%;
     padding: 0 15px;
     max-width: 100%;
+    &_active {
+      z-index: 9;
+      top: 0;
+      left: 0;
+      overflow: scroll;
+    }
   }
-  &_active {
-    max-height: 10000px;
-  }
+
 }
 .filter_item {
   font-size: 15px;

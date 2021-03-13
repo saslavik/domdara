@@ -55,6 +55,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.home {
+  height: 100%;
+  overflow: auto;
+}
 .home_content {
   display: flex;
   @media screen and (max-width: 980px) {
