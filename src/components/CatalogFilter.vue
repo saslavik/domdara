@@ -5,11 +5,14 @@
     @click="$emit('catalog')">Каталог</div>
     <div class="catalog_bottom"
     :class="{catalog_bottom_active: catalog}">
+      <div class="bottom_title">
+        каталог <span @click="$emit('catalog')">✕</span></div>
         <div class="filter_body"
         v-show="catalog"
         :class="{filter_body_active: catalog}">
           <div class="catalog_item"
-          v-for="item in catalogList" :key="item.title">
+          v-for="item in catalogList"
+          :id="item.img" :key="item.title">
             <div class="catalog_item_top arrow"
             :class="{catalog_item_top_active: item.childActive}"
             @click="changeChildActive(item)">
@@ -19,7 +22,7 @@
             <div class="catalog_item_bottom"
             :class="{catalog_item_bottom_active: item.childActive}">
               <div class="catalog_child" v-for="child in item.child" :key="child.id"
-              @click="catalogValue = child.id; closeMobile()"
+              @click="catalogValue = child.id"
               :class="{'catalog_child_active': child.id === catalogValue}">
                 <input :id='child.id' type="radio" name="catalog" :value="child.id"
                 hidden class="catalog_child" v-model="catalogValue" @click.stop>
@@ -28,6 +31,10 @@
             </div>
           </div>
         </div>
+      <div class="row">
+        <div class="cancel" @click="cancel()">Сбросить</div>
+        <div class="apply" @click="apply()">Показать</div>
+      </div>
     </div>
   </div>
 </template>
@@ -1861,16 +1868,30 @@ export default {
       arr.forEach((el) => { this.catalogList[el].childActive = false; });
     },
     changeChildActive(child) {
-      //
       const changeValue = child;
       if (changeValue.childActive) {
         changeValue.childActive = !changeValue.childActive;
       } else {
         this.closeUp();
         changeValue.childActive = true;
+        setTimeout(() => {
+          document.getElementById(child.img).scrollIntoView({ behavior: 'smooth' });
+        }, 0);
+        // this.$refs[child.img].scrollIntoView();
+        console.log(child.img);
       }
     },
     closeMobile() {
+      if (window.innerWidth <= 980) {
+        window.scrollTo(0, 0);
+        this.$emit('catalog');
+      }
+    },
+    cancel() {
+      this.catalogValue = null;
+      this.closeUp();
+    },
+    apply() {
       if (window.innerWidth <= 980) {
         window.scrollTo(0, 0);
         this.$emit('catalog');
@@ -1891,6 +1912,55 @@ export default {
     mask-size: cover;
     width: 16px;
     height: 16px;
+  }
+}
+.bottom_title {
+  display: none;
+  @media screen and (max-width: 576px) {
+    display: flex;
+    margin: 15px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    text-transform: uppercase;
+  }
+}
+.row {
+  display: none;
+  @media screen and (max-width: 576px) {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px;
+    .apply {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 120px;
+      height: 40px;
+      color: #fff;
+      border-radius: 20px;
+      background-color: #7141F0;
+      border: 1px solid #7141F0;
+      &:hover {
+        background-color: #181818;
+        border: 1px solid #181818;
+      }
+    }
+    .cancel {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 120px;
+      height: 40px;
+      color: #181818;
+      border-radius: 20px;
+      border: 1px solid #181818;
+      &:hover {
+        color: #fff;
+        background-color: #181818;
+        border: 1px solid #181818;
+      }
+    }
   }
 }
 .line_grey {
@@ -1930,7 +2000,6 @@ export default {
     overflow: hidden;
     transition: 0.3s linear;
     z-index: -1;
-    height: 100%;
 }
 .catalog {
   // position: relative;
@@ -2025,15 +2094,27 @@ export default {
   background-color: #fff;
   max-height: 0;
   transition: all 0.3s ease;
+  &_active {
+    max-height: 10000px;
+  }
   @media screen and (max-width: 980px) {
     position: absolute;
   }
   @media screen and (max-width: 576px) {
-    left: 0;
+    position: fixed;
+    top: 0;
+    left: -100%;
     width: 100%;
-  }
-  &_active {
-    max-height: 10000px;
+    height: 100%;
+    padding: 0 15px;
+    max-width: 100%;
+    &_active {
+      z-index: 9;
+      top: 0;
+      left: 0;
+      overflow: scroll;
+      background-attachment: fixed, fixed;
+    }
   }
 }
 .catalog_top {

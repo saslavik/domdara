@@ -48,10 +48,12 @@ export default {
     filterShow() {
       this.filter = !this.filter;
       this.catalog = false;
+      if (window.innerWidth <= 576) document.body.style.position = this.filter || this.catalog ? 'fixed' : 'relative';
     },
     catalogShow() {
       this.catalog = !this.catalog;
       if (window.innerWidth <= 980) this.filter = false;
+      if (window.innerWidth <= 576) document.body.style.position = this.filter || this.catalog ? 'fixed' : 'relative';
     },
     checkResize() {
       this.screenMobileWidth = window.innerWidth > 980;

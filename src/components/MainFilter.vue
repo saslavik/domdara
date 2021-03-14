@@ -138,8 +138,8 @@
         </div>
       </div>
       <div class="row">
-        <div class="cancel">Сбросить</div>
-        <div class="apply">Применить</div>
+        <div class="cancel" @click="cancel()">Сбросить</div>
+        <div class="apply" @click="apply()">Показать</div>
       </div>
     </div>
   </div>
@@ -329,6 +329,22 @@ export default {
         this.$emit('filter');
       }
     },
+    cancel() {
+      /* eslint-disable no-param-reassign */
+      Object.values(this.advanced).forEach((el) => { el.value = false; });
+      this.distance = [1000, 25000];
+      this.filterList.sortValue = 'default';
+      this.filterList.paymentsValue = 'all';
+      this.filterList.countriesValue = null;
+      this.filterList.citiesValue = null;
+      this.filterList.areaValue = null;
+    },
+    apply() {
+      if (window.innerWidth <= 980) {
+        window.scrollTo(0, 0);
+        this.$emit('filter');
+      }
+    },
   },
 };
 </script>
@@ -367,9 +383,42 @@ export default {
   }
 }
 .row {
-  display: flex;
-  justify-content: space-between;
-  margin: 15px;
+  display: none;
+  @media screen and (max-width: 576px) {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px;
+    .apply {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 120px;
+      height: 40px;
+      color: #fff;
+      border-radius: 20px;
+      background-color: #7141F0;
+      border: 1px solid #7141F0;
+      &:hover {
+        background-color: #181818;
+        border: 1px solid #181818;
+      }
+    }
+    .cancel {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 120px;
+      height: 40px;
+      color: #181818;
+      border-radius: 20px;
+      border: 1px solid #181818;
+      &:hover {
+        color: #fff;
+        background-color: #181818;
+        border: 1px solid #181818;
+      }
+    }
+  }
 }
 // радиус поиска
 .distance {
@@ -464,6 +513,7 @@ export default {
       top: 0;
       left: 0;
       overflow: scroll;
+      background-attachment: fixed, fixed;
     }
   }
 
