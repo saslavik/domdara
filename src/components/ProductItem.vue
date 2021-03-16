@@ -1,9 +1,11 @@
 <template>
   <div class="product_item">
+    <!-- картинка товара -->
     <div class="product_img"
     :class="{product_img_new: imgNew, product_img_top: imgTop}">
       <img :src="require(`../assets/img/${image}.jpg`)" alt="">
     </div>
+    <!-- строка под картинкой  -->
     <div class="product_row">
       Кэшбэк 20%
       <div class="product_icons">
@@ -20,8 +22,11 @@
         </div>
       </div>
     </div>
+    <!-- название товара -->
     <div class="product_title">{{ title }}</div>
+    <!-- описание товара -->
     <div class="product_desc">{{ desc }}</div>
+    <!-- строка под описанием если это необходимо -->
     <div class="product_additionalInfo" v-if="additionalInfo">
       <div class="additionalInfo_card">
         <img src="../assets/svg/Card.svg" alt="">3958

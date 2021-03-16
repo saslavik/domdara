@@ -1,6 +1,8 @@
 <template>
   <div class="filter">
-    <finder/>
+    <!-- сайд бар с фильтрами и поиском -->
+    <finder/> <!-- сам поиск -->
+    <!-- кнопки добавляются при мобильной версии -->
     <div class="shopingCart">
       <div class="heart">
         <div class="heart_img"></div>
@@ -9,6 +11,7 @@
         <div class="cart_img"></div>
       </div>
     </div>
+    <!-- компоненты фильтр и каталог -->
     <main-filter :filter="filter" @filter="filterShow()"/>
     <catalog-filter :catalog="catalog" @catalog="catalogShow()"/>
   </div>
@@ -27,15 +30,18 @@ export default {
   },
   data() {
     return {
+      // данные фильтр и каталог нужны для того, что бы опеределять если значения свернуты
       filter: false,
       catalog: false,
       screenMobileWidth: null,
     };
   },
+  // следим за шириной экрана
   mounted() {
     this.screenMobileWidth = window.innerWidth > 980;
     window.addEventListener('resize', this.checkResize);
   },
+  // проверка ширины экрана для в случае если ширина под мобильную версию - сворачивать фильтра
   watch: {
     screenMobileWidth: {
       handler(val) {
@@ -45,16 +51,19 @@ export default {
     },
   },
   methods: {
+    // окно фильтров
     filterShow() {
       this.filter = !this.filter;
       this.catalog = false;
       if (window.innerWidth <= 576) document.body.style.position = this.filter || this.catalog ? 'fixed' : 'relative';
     },
+    // окно каталога
     catalogShow() {
       this.catalog = !this.catalog;
       if (window.innerWidth <= 980) this.filter = false;
       if (window.innerWidth <= 576) document.body.style.position = this.filter || this.catalog ? 'fixed' : 'relative';
     },
+    // проверка ширины экрана
     checkResize() {
       this.screenMobileWidth = window.innerWidth > 980;
     },

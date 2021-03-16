@@ -28,7 +28,6 @@
 <script>
 import FilterComponent from '@/components/FilterComponent.vue';
 import CashBackInfo from '@/components/CashBackInfo.vue';
-// @ is an alias to /src
 
 export default {
   components: { FilterComponent, CashBackInfo },

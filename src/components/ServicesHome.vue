@@ -1,6 +1,7 @@
 <template>
   <div class="company">
     <div class="company_container">
+      <!-- единица услуг вызываемая через компанент и передачи ей значения -->
       <product-item
       v-for="item in items" :key="item.title"
       :img="'Company'"

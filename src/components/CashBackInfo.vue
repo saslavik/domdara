@@ -48,9 +48,11 @@
 export default {
   data() {
     return {
+      // значени свернутоскти кешбека
       minimise: false,
     };
   },
+  // кнопка поднятия экрана вверх
   methods: {
     scrollToTop() {
       window.scrollTo(0, 0);

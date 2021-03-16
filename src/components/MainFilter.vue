@@ -2,16 +2,17 @@
   <div class="filter_content filter_box">
     <!-- кнопка выпадающего меню фильтры -->
     <div class="filter_item filter_top category arrow"
-    :class="{filter_top_active: filterShow}"
+    :class="{filter_top_active: filter}"
     @click="$emit('filter')">Фильтры</div>
     <!-- список фильтров -->
     <div class="filter_bottom"
-    :class="{filter_bottom_active: filterShow}">
+    :class="{filter_bottom_active: filter}">
       <div class="bottom_title">
         фильтры <span @click="$emit('filter')">✕</span></div>
       <div class="filter_body"
-      v-show="filterShow"
-      :class="{filter_body_active: filterShow}">
+      v-show="filter"
+      :class="{filter_body_active: filter}">
+      <!-- Сортировка -->
         <div class="sort filter_item">
           <div class="line_grey arrow"
           :class="{arrow_active: arrow.sort}"
@@ -29,6 +30,7 @@
               </div>
           </div>
         </div >
+        <!-- Варианты оплат -->
         <div class="payments filter_item">
           <div class="line_grey arrow"
           :class="{arrow_active: arrow.payments}"
@@ -48,6 +50,7 @@
             </div>
           </div>
         </div>
+        <!-- Страны -->
         <div class="countries line_white filter_item">
           <div class="line_white_title arrow"
           :class="{arrow_active: arrow.countries}"
@@ -68,6 +71,7 @@
               </div>
           </div>
         </div>
+        <!-- Города -->
         <div class="cities line_white filter_item">
           <div class="line_white_title arrow"
           :class="{arrow_active: arrow.cities}"
@@ -87,6 +91,7 @@
             </div>
           </div>
         </div>
+        <!-- Районы -->
         <div class="area line_white filter_item">
           <div class="line_white_title arrow"
           :class="{arrow_active: arrow.area}"
@@ -104,6 +109,7 @@
             </div>
           </div>
         </div>
+        <!-- радиус поиска -->
         <div class="distance filter_item">
           Радиус поиска
           <div class="distance_row">
@@ -130,6 +136,7 @@
           :tooltip="'none'">
           </vue-slider>
         </div>
+        <!-- Чекбоксы -->
         <div class="advanced filter_item">
           <div v-for="item in advanced" :key="item.title"
           class="checkbox"
@@ -137,6 +144,7 @@
           @click="item.value = !item.value">{{ item.title }}</div>
         </div>
       </div>
+      <!-- кнопки применить и отмены -->
       <div class="row">
         <div class="cancel" @click="cancel()">Сбросить</div>
         <div class="apply" @click="apply()">Показать</div>
@@ -159,6 +167,7 @@ export default {
     return {
       // Радиус поиска
       distance: [1000, 25000],
+      // список фильтров и их данных
       filterList: {
         sort: [
           {
@@ -288,6 +297,7 @@ export default {
           value: false,
         },
       },
+      // Данные используемые для активации css классов
       arrow: {
         sort: false,
         payments: false,
@@ -295,19 +305,15 @@ export default {
         cities: false,
         area: false,
       },
+      // ширина по дефаулту инпутов радиуса
       width: {
         from: 35,
         to: 44,
       },
     };
   },
-
-  computed: {
-    filterShow() {
-      return this.filter;
-    },
-  },
   watch: {
+    // отслеживаем изменении данных в инпуте (радиус поиска)
     distance: {
       handler(val, oldVal) {
         this.inputResize();
@@ -317,18 +323,21 @@ export default {
     },
   },
   methods: {
+    // при изменении данных в инпуте (радиус поиска) менять ширину инпута на необходимую
     inputResize() {
       setTimeout(() => {
         this.width.from = this.$el.querySelector('.input_fake_from').clientWidth;
         this.width.to = this.$el.querySelector('.input_fake_to').clientWidth;
       }, 0);
     },
+    // сворачиваем фильтры при переходе на мобильный режим
     closeMobile() {
       if (window.innerWidth <= 980) {
         window.scrollTo(0, 0);
         this.$emit('filter');
       }
     },
+    // кнопка сброса всех данных в фильтре
     cancel() {
       /* eslint-disable no-param-reassign */
       Object.values(this.advanced).forEach((el) => { el.value = false; });
@@ -339,6 +348,7 @@ export default {
       this.filterList.citiesValue = null;
       this.filterList.areaValue = null;
     },
+    // кнопка применить в фильтрах
     apply() {
       if (window.innerWidth <= 980) {
         window.scrollTo(0, 0);

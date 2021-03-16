@@ -1,24 +1,30 @@
 <template>
   <div class="catalog filter_box">
+    <!-- Кнопка КАТАЛОГ на странице -->
     <div class="line_grey arrow catalog_top"
     :class="{arrow_active: catalog}"
     @click="$emit('catalog')">Каталог</div>
+    <!-- Выпадающее окно каталога -->
     <div class="catalog_bottom"
     :class="{catalog_bottom_active: catalog}">
+    <!-- Название каталога в мобильной версии -->
       <div class="bottom_title">
         каталог <span @click="$emit('catalog')">✕</span></div>
+        <!-- список позиций каталога достаем из Даты -->
         <div class="filter_body"
         v-show="catalog"
         :class="{filter_body_active: catalog}">
           <div class="catalog_item"
           v-for="item in catalogList"
           :id="item.img" :key="item.title">
+          <!-- оформление каждой строки каталога(картинка, название, стрелка) -->
             <div class="catalog_item_top arrow"
             :class="{catalog_item_top_active: item.childActive}"
             @click="changeChildActive(item)">
               <img :src="require(`../assets/svg/catalog/${item.img}.svg`)" alt="">
               <div class="catalog_text">{{ item.title }}</div>
             </div>
+            <!-- дочерние элементы каждой единицы каталога -->
             <div class="catalog_item_bottom"
             :class="{catalog_item_bottom_active: item.childActive}">
               <div class="catalog_child" v-for="child in item.child" :key="child.id"
@@ -31,6 +37,7 @@
             </div>
           </div>
         </div>
+        <!-- строка с кнопками -->
       <div class="row">
         <div class="cancel" @click="cancel()">Сбросить</div>
         <div class="apply" @click="apply()">Показать</div>
@@ -44,8 +51,9 @@ export default {
   props: ['catalog'],
   data() {
     return {
-      arrowCatalog: false,
+      // определяет какой элемент списка каталога сейчас активен
       catalogValue: null,
+      // сам список каталога
       catalogList: {
         woman: {
           title: 'Женская одежда',
@@ -1855,18 +1863,13 @@ export default {
       },
     };
   },
-  watch: {
-    arrowCatalog: {
-      handler(val) {
-        if (val === false) this.closeUp();
-      },
-    },
-  },
   methods: {
+    // метод сворачивания всех единиц каталога
     closeUp() {
       const arr = Object.keys(this.catalogList);
       arr.forEach((el) => { this.catalogList[el].childActive = false; });
     },
+    // изменяем выбор каталона
     changeChildActive(child) {
       const changeValue = child;
       if (changeValue.childActive) {
@@ -1877,20 +1880,21 @@ export default {
         setTimeout(() => {
           document.getElementById(child.img).scrollIntoView({ behavior: 'smooth' });
         }, 0);
-        // this.$refs[child.img].scrollIntoView();
-        console.log(child.img);
       }
     },
+    // при переходе на мобильную версию сворачивать каталог в дефаулт режиме
     closeMobile() {
       if (window.innerWidth <= 980) {
         window.scrollTo(0, 0);
         this.$emit('catalog');
       }
     },
+    // кнопка отмены
     cancel() {
       this.catalogValue = null;
       this.closeUp();
     },
+    // кнопка применить (которая должна применять данные с Даты к массиву товаров)
     apply() {
       if (window.innerWidth <= 980) {
         window.scrollTo(0, 0);
